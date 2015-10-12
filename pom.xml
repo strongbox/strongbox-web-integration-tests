@@ -404,6 +404,52 @@
                     </plugin>
 
                     <plugin>
+                        <groupId>org.carlspring.maven</groupId>
+                        <artifactId>system-properties-maven-plugin</artifactId>
+                        <version>1.0</version>
+
+                        <executions>
+                            <execution>
+                                <id>set-properties</id>
+
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>set</goal>
+                                </goals>
+
+                                <configuration>
+                                    <properties>
+                                        <property>
+                                            <name>port.jetty.listen</name>
+                                            <value>${port.jetty.listen}</value>
+                                        </property>
+                                    </properties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>run-jetty</id>
+            <activation>
+                <property>
+                    <name>!skipJetty</name>
+                </property>
+            </activation>
+
+            <properties>
+                <dir.strongbox.home>${project.build.directory}/strongbox</dir.strongbox.home>
+                <dir.strongbox.vault>${project.build.directory}/strongbox-vault</dir.strongbox.vault>
+                <dir.jetty.etc>${dir.strongbox.home}/etc/jetty</dir.jetty.etc>
+            </properties>
+
+            <build>
+                <plugins>
+                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
+                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
+                    <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
                         <version>${version.jetty}</version>
@@ -484,32 +530,6 @@
                                 <version>${version.jetty}</version>
                             </dependency>
                         </dependencies>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.carlspring.maven</groupId>
-                        <artifactId>system-properties-maven-plugin</artifactId>
-                        <version>1.0</version>
-
-                        <executions>
-                            <execution>
-                                <id>set-properties</id>
-
-                                <phase>test-compile</phase>
-                                <goals>
-                                    <goal>set</goal>
-                                </goals>
-
-                                <configuration>
-                                    <properties>
-                                        <property>
-                                            <name>port.jetty.listen</name>
-                                            <value>${port.jetty.listen}</value>
-                                        </property>
-                                    </properties>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

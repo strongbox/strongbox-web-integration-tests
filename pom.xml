@@ -357,6 +357,11 @@
                             <settingsFile>src/it/settings.xml</settingsFile>
                             <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                             <addTestClassPath>true</addTestClassPath>
+
+                            <pomExcludes>
+                                <exclude>deploy-with-invalid-user*/pom.xml</exclude>
+                            </pomExcludes>
+
                             <properties>
                                 <strongbox.home>${project.build.directory}/strongbox</strongbox.home>
                                 <strongbox.vault>${project.build.directory}/strongbox-vault</strongbox.vault>

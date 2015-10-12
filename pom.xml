@@ -201,6 +201,20 @@
         <!-- These two profiles need to be on top. -->
 
         <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-host</id>
+            <activation>
+                <property>
+                    <name>!strongbox.host</name>
+                </property>
+            </activation>
+
+            <properties>
+                <strongbox.host>localhost</strongbox.host>
+            </properties>
+        </profile>
+
+        <profile>
             <id>run-it-tests</id>
             <activation>
                 <property>
@@ -347,6 +361,7 @@
                                 <strongbox.home>${project.build.directory}/strongbox</strongbox.home>
                                 <strongbox.vault>${project.build.directory}/strongbox-vault</strongbox.vault>
                                 <strongbox.storage.booter.basedir>${basedir}/target/storages</strongbox.storage.booter.basedir>
+                                <strongbox.host>${strongbox.host}</strongbox.host>
                                 <port.jetty.listen>${port.jetty.listen}</port.jetty.listen>
                             </properties>
                         </configuration>

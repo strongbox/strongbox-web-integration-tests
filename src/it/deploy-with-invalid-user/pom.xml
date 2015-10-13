@@ -24,7 +24,7 @@
         <snapshotRepository>
             <id>snapshots-with-invalid-user</id>
             <name>snapshots-with-invalid-user</name>
-            <url>http://localhost:@port.jetty.listen@/storages/storage0/snapshots/</url>
+            <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/snapshots/</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>

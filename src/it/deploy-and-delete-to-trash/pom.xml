@@ -23,11 +23,11 @@
     <distributionManagement>
         <repository>
             <id>releases-with-valid-user</id>
-            <url>http://localhost:@port.jetty.listen@/storages/storage0/releases-with-trash/</url>
+            <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/releases-with-trash/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots-with-valid-user</id>
-            <url>http://localhost:@port.jetty.listen@/storages/storage0/snapshots-with-trash/</url>
+            <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/snapshots-with-trash/</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>

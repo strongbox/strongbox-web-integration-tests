@@ -202,7 +202,7 @@
 
         <profile>
             <!-- Required for the sake of the integration tests: -->
-            <id>set-strongbox-host</id>
+            <id>set-strongbox-host-default</id>
             <activation>
                 <property>
                     <name>!strongbox.host</name>
@@ -211,6 +211,43 @@
 
             <properties>
                 <strongbox.host>localhost</strongbox.host>
+            </properties>
+        </profile>
+        <profile>
+            <id>set-strongbox-host</id>
+            <activation>
+                <property>
+                    <name>strongbox.host</name>
+                </property>
+            </activation>
+
+            <properties>
+                <strongbox.host>${strongbox.host}</strongbox.host>
+            </properties>
+        </profile>
+        <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-port-default</id>
+            <activation>
+                <property>
+                    <name>!strongbox.port</name>
+                </property>
+            </activation>
+
+            <properties>
+                <port.jetty.listen>${port.jetty.listen}</port.jetty.listen>
+            </properties>
+        </profile>
+        <profile>
+            <id>set-strongbox-port</id>
+            <activation>
+                <property>
+                    <name>strongbox.port</name>
+                </property>
+            </activation>
+
+            <properties>
+                <port.jetty.listen>${strongbox.port}</port.jetty.listen>
             </properties>
         </profile>
 

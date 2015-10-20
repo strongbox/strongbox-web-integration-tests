@@ -235,19 +235,7 @@
             </activation>
 
             <properties>
-                <port.jetty.listen>${port.jetty.listen}</port.jetty.listen>
-            </properties>
-        </profile>
-        <profile>
-            <id>set-strongbox-port</id>
-            <activation>
-                <property>
-                    <name>strongbox.port</name>
-                </property>
-            </activation>
-
-            <properties>
-                <port.jetty.listen>${strongbox.port}</port.jetty.listen>
+                <strongbox.port>${port.jetty.listen}</strongbox.port>
             </properties>
         </profile>
 
@@ -404,7 +392,7 @@
                                 <strongbox.vault>${project.build.directory}/strongbox-vault</strongbox.vault>
                                 <strongbox.storage.booter.basedir>${basedir}/target/storages</strongbox.storage.booter.basedir>
                                 <strongbox.host>${strongbox.host}</strongbox.host>
-                                <port.jetty.listen>${port.jetty.listen}</port.jetty.listen>
+                                <strongbox.port>${strongbox.port}</strongbox.port>
                             </properties>
                         </configuration>
 
@@ -522,6 +510,14 @@
                                 <systemProperty>
                                     <name>strongbox.vault</name>
                                     <value>${dir.strongbox.vault}</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>strongbox.host</name>
+                                    <value>${strongbox.host}</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>strongbox.port</name>
+                                    <value>${strongbox.port}</value>
                                 </systemProperty>
                                 <systemProperty>
                                     <name>repository.config.xml</name>

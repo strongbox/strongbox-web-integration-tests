@@ -3,7 +3,7 @@ import org.carlspring.strongbox.client.ArtifactClient
 
 
 def artifact = ArtifactUtils.getArtifactFromGAV("org.carlspring.maven:test-project:1.0-SNAPSHOT");
-def client = new ArtifactClient();
+def client = ArtifactClient.testInstance;
 client.setUsername("invalid-user");
 
 // This should throw a ResponseException as the user is not valid.

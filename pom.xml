@@ -226,21 +226,6 @@
                 <strongbox.host>${strongbox.host}</strongbox.host>
             </properties>
         </profile>
-        <!--
-        <profile>
-            &lt;!&ndash; Required for the sake of the integration tests: &ndash;&gt;
-            <id>set-strongbox-port-default</id>
-            <activation>
-                <property>
-                    <name>!strongbox.port</name>
-                </property>
-            </activation>
-
-            <properties>
-                <strongbox.port>48080</strongbox.port>
-            </properties>
-        </profile>
-        -->
 
         <profile>
             <id>run-it-tests</id>

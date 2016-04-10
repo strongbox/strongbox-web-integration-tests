@@ -4,7 +4,7 @@ This projects contains the maven-invoker-plugin-based tests for the Strongbox we
 
 | Operating System | Status | 
 | --- | ------ |
-| CentOS 7 | [![Build Status](https://dev.carlspring.org/jenkins/job/strongbox-web-integration-tests-centos-x64/)](https://dev.carlspring.org/jenkins/job/strongbox-web-integration-tests-centos-x64/) |
+| CentOS 7 | [![Build Status](https://dev.carlspring.org/jenkins/job/strongbox-web-integration-tests-centos-x64/badge/icon)](https://dev.carlspring.org/jenkins/job/strongbox-web-integration-tests-centos-x64) |
 | OpenSuse 13.2 | [![Build Status](http://dev.carlspring.org/status/jenkins/strongbox-web-integration-tests-ubuntu-15.10)](https://dev.carlspring.org/jenkins/view/strongbox/job/strongbox-web-integration-tests/) |
 | Ubuntu 15.10 | [![Build Status](http://dev.carlspring.org/status/jenkins/strongbox-web-integration-tests-ubuntu-15.10)](https://dev.carlspring.org/jenkins/view/strongbox-ubuntu/job/strongbox-web-integration-tests-ubuntu-15.10/) |
 | Windows x64 | [![Build Status](http://dev.carlspring.org/status/jenkins/strongbox-web-integration-tests-win64)](https://dev.carlspring.org/jenkins/view/strongbox-ubuntu/job/strongbox-web-integration-tests-win64/) |

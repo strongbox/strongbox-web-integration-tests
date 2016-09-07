@@ -57,53 +57,23 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-web-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>strongbox-commons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-security-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-storage-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-storage-indexing</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>strongbox-client</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-web-core</artifactId>
-            <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>strongbox-common-resources</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-storage-api-resources</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-storage-booter-resources</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>strongbox-storage-indexing-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -166,8 +136,8 @@
                                 <phase>initialize</phase>
                                 <configuration>
                                     <portNames>
-                                        <portName>strongbox.port</portName>
-                                        <portName>strongbox.port.shutdown</portName>
+                                        <portName>port.jetty.listen</portName>
+                                        <portName>port.jetty.shutdown</portName>
                                     </portNames>
                                 </configuration>
                             </execution>
@@ -189,9 +159,8 @@
 
             <properties>
                 <!-- Default ports for local development: -->
-                <strongbox.host>localhost</strongbox.host>
-                <strongbox.port>48080</strongbox.port>
-                <strongbox.port.shutdown>48081</strongbox.port.shutdown>
+                <port.jetty.listen>48080</port.jetty.listen>
+                <port.jetty.shutdown>19081</port.jetty.shutdown>
             </properties>
         </profile>
         <!-- These two profiles need to be on top. -->
@@ -219,6 +188,19 @@
 
             <properties>
                 <strongbox.host>${strongbox.host}</strongbox.host>
+            </properties>
+        </profile>
+        <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-port-default</id>
+            <activation>
+                <property>
+                    <name>!strongbox.port</name>
+                </property>
+            </activation>
+
+            <properties>
+                <strongbox.port>${port.jetty.listen}</strongbox.port>
             </properties>
         </profile>
 
@@ -310,19 +292,39 @@
                                             <type>jar</type>
 
                                             <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.vault}</outputDirectory>
-                                            <includes>etc/conf/strongbox.xml,META-INF/spring/**</includes>
+                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
+                                            <includes>etc/conf/strongbox.xml</includes>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-storage-indexing-resources</artifactId>
+                                            <artifactId>strongbox-storage-api-resources</artifactId>
                                             <version>${project.version}</version>
                                             <type>jar</type>
 
                                             <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.vault}</outputDirectory>
-                                            <includes>META-INF/spring/**</includes>
-                                            <excludes>**/META-INF/maven/**</excludes>
+                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
+                                            <includes>etc/conf/security-users.xml</includes>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>unpack-user-management</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>strongbox-user-management</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>jar</type>
+
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
+                                            <includes>etc/conf/security-users.xml</includes>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -376,6 +378,11 @@
                                 <strongbox.storage.booter.basedir>${basedir}/target/storages</strongbox.storage.booter.basedir>
                                 <strongbox.host>${strongbox.host}</strongbox.host>
                                 <strongbox.port>${strongbox.port}</strongbox.port>
+                                <logback.configurationFile>${dir.strongbox.home}/etc/logback.xml</logback.configurationFile>
+                                <logging.config.file>${project.build.directory}/strongbox/etc/logback.xml</logging.config.file>
+                                <logging.dir>${dir.strongbox.vault}/logs</logging.dir>
+                                <java.io.tmpdir>${dir.strongbox.vault}/tmp</java.io.tmpdir>
+                                <ehcache.disk.store.dir>${dir.strongbox.vault}/cache</ehcache.disk.store.dir>
                             </properties>
                         </configuration>
 
@@ -475,12 +482,12 @@
                                 <descriptor>${dir.strongbox.home}/webapp/WEB-INF/web.xml</descriptor>
                             </webApp>
 
-                            <stopPort>${strongbox.port.shutdown}</stopPort>
+                            <stopPort>${port.jetty.shutdown}</stopPort>
                             <stopKey>53AS9DS1FD8E3WEFEW9GR1ER8G2ER0WE31</stopKey>
                             <stopWait>10</stopWait>
 
                             <httpConnector>
-                                <port>${strongbox.port}</port>
+                                <port>${port.jetty.listen}</port>
                             </httpConnector>
 
                             <systemProperties>
@@ -510,6 +517,22 @@
                                     <name>strongbox.storage.booter.basedir</name>
                                     <value>${dir.strongbox.vault}/storages</value>
                                 </systemProperty>
+                                <systemProperty>
+                                    <name>ehcache.disk.store.dir</name>
+                                    <value>${dir.strongbox.vault}/cache</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>logging.dir</name>
+                                    <value>${dir.strongbox.vault}/logs</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>logging.config.file</name>
+                                    <value>${dir.strongbox.home}/etc/logback.xml</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>logback.configurationFile</name>
+                                    <value>${dir.strongbox.home}/etc/logback.xml</value>
+                                </systemProperty>
                             </systemProperties>
 
                             <useTestScope>true</useTestScope>
@@ -529,36 +552,17 @@
                                     <goal>start</goal>
                                 </goals>
                             </execution>
-                            <execution>
-                                <id>jetty-stop</id>
-
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
                         </executions>
-
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.eclipse.jetty</groupId>
-                                <artifactId>jetty-util</artifactId>
-                                <version>${version.jetty}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.eclipse.jetty</groupId>
-                                <artifactId>jetty-runner</artifactId>
-                                <version>${version.jetty}</version>
-                            </dependency>
-                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
         </profile>
         <profile>
-            <id>block-jetty</id>
+            <id>jetty-block</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>jetty.block</name>
+                </property>
             </activation>
 
             <build>
@@ -566,11 +570,21 @@
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
-                        <version>${version.jetty}</version>
 
                         <configuration>
                             <daemon>false</daemon>
                         </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>jetty-run</id>
+
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

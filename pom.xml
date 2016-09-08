@@ -150,8 +150,7 @@
             <id>set-default-ports</id>
             <activation>
                 <property>
-                    <name>skipTests</name>
-                    <value>!true</value>
+                    <name>!strongbox.port</name>
                 </property>
 
                 <activeByDefault>true</activeByDefault>
@@ -201,6 +200,19 @@
 
             <properties>
                 <strongbox.port>${port.jetty.listen}</strongbox.port>
+            </properties>
+        </profile>
+        <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-port</id>
+            <activation>
+                <property>
+                    <name>strongbox.port</name>
+                </property>
+            </activation>
+
+            <properties>
+                <port.jetty.listen>${strongbox.port}</port.jetty.listen>
             </properties>
         </profile>
 

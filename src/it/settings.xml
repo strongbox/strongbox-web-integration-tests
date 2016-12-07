@@ -42,7 +42,7 @@
         </server>
         <server>
             <id>releases-with-invalid-user</id>
-            <username>maven</username>
+            <username>user1</username>
             <password>password1234</password>
         </server>
         <server>
@@ -57,7 +57,7 @@
         </server>
         <server>
             <id>snapshots-with-invalid-user</id>
-            <username>maven</username>
+            <username>user1</username>
             <password>password1234</password>
         </server>
     </servers>

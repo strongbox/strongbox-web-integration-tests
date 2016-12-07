@@ -1,5 +1,15 @@
 This projects contains the maven-invoker-plugin-based tests for the Strongbox webapp assembly.
 
+# Building
+
+The order of building is this:
+
+* [Strongbox](https://github.com/strongbox/strongbox/)
+* [Strongbox Webapp](https://github.com/strongbox/strongbox-webapp/)
+* [Strongbox Web Integration Tests](https://github.com/strongbox/strongbox-web-integration-tests/)
+
+# Build Status
+
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/strongbox/strongbox-integration-tests?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 | Operating System | Status | 

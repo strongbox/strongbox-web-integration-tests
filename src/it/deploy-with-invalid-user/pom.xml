@@ -21,12 +21,12 @@
     </dependencies>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots-with-invalid-user</id>
-            <name>snapshots-with-invalid-user</name>
+        <repository>
+            <id>releases-with-invalid-user</id>
+            <name>releases-with-invalid-user</name>
             <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/snapshots/</url>
             <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
+        </repository>
     </distributionManagement>
 
 </project>

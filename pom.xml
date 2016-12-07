@@ -14,7 +14,7 @@
 
     <artifactId>strongbox-web-integration-tests</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Strongbox: Integration Tests [Web]</name>
 
@@ -41,6 +41,10 @@
         <tag>master</tag>
     </scm>
 
+    <properties>
+        <version.groovy>2.3.0-beta-2</version.groovy>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -51,6 +55,27 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <strongbox.home>${project.build.directory}/strongbox</strongbox.home>
+                        <strongbox.vault>${project.build.directory}/strongbox-vault</strongbox.vault>
+                        <strongbox.storage.booter.basedir>${project.build.directory}/strongbox-vault/storages</strongbox.storage.booter.basedir>
+                        <repository.config.xml>${project.build.directory}/strongbox/etc/conf/strongbox.xml</repository.config.xml>
+                        <!--<strongbox.host>${strongbox.host}</strongbox.host>
+                        <strongbox.port>${strongbox.port}</strongbox.port>-->
+                        <strongbox.host>localhost</strongbox.host>
+                        <strongbox.port>48080</strongbox.port>
+                        <logging.dir>${project.build.directory}/strongbox/logs</logging.dir>
+                        <logging.config.file>${project.build.directory}/strongbox/etc/logback.xml</logging.config.file>
+                        <java.io.tmpdir>${dir.strongbox.vault}/tmp</java.io.tmpdir>
+                        <ehcache.disk.store.dir>${project.build.directory}/strongbox/cache</ehcache.disk.store.dir>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -59,6 +84,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>strongbox-web-core</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-web-core</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -100,6 +131,13 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${version.groovy}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -425,7 +463,7 @@
                             <dependency>
                                 <groupId>org.codehaus.groovy</groupId>
                                 <artifactId>groovy-all</artifactId>
-                                <version>2.3.0-beta-2</version>
+                                <version>${version.groovy}</version>
                             </dependency>
                         </dependencies>
                     </plugin>

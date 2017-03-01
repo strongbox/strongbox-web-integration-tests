@@ -73,6 +73,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-rest-client</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>strongbox-common-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -376,6 +382,7 @@
                             <addTestClassPath>true</addTestClassPath>
 
                             <pomExcludes>
+                                <exclude>redeploy*/pom.xml</exclude>
                                 <exclude>deploy-with-invalid-user*/pom.xml</exclude>
                             </pomExcludes>
 
@@ -414,6 +421,22 @@
                                 <groupId>org.carlspring.strongbox</groupId>
                                 <artifactId>strongbox-client</artifactId>
                                 <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-rest-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-storage-api</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+
+                            <dependency>
+                                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                                <artifactId>jackson-jaxrs-json-provider</artifactId>
+                                <version>${version.jackson}</version>
                             </dependency>
 
                             <dependency>

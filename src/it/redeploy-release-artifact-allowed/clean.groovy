@@ -3,10 +3,6 @@ import org.carlspring.strongbox.storage.repository.Repository
 import org.carlspring.strongbox.storage.repository.RepositoryLayoutEnum
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
 
-import org.carlspring.maven.commons.util.ArtifactUtils
-
-def artifact = ArtifactUtils.getArtifactFromGAV("org.carlspring.maven:test-project:1.0.5")
-
 def client = RestClient.getTestInstanceLoggedInAsAdmin()
 
 System.out.println()
@@ -31,7 +27,7 @@ try
     System.out.println("storage = " + storage.toString())
     System.out.println()
 
-    def repositoryId = "releases-with-trash"
+    def repositoryId = "releases-with-redeployment"
 
     if (storage.getRepository(repositoryId) == null)
     {
@@ -46,7 +42,7 @@ try
         def repository = new Repository(repositoryId)
         repository.setLayout(RepositoryLayoutEnum.MAVEN_2.layout)
         repository.setPolicy(RepositoryPolicyEnum.RELEASE.policy)
-        repository.setTrashEnabled(true)
+        repository.setAllowsRedeployment(true)
         repository.setStorage(storage)
 
         client.addRepository(repository)
@@ -56,18 +52,21 @@ try
         System.out.println("Repository '" + repositoryId + "' successfully created!")
         System.out.println()
         System.out.println()
+
+        def s = configuration.getStorage("storage0")
+        def r = client.getRepository("storage0", repositoryId)
+
+        System.out.println()
+        System.out.println()
+        System.out.println("storage0: " + s.toString())
+        System.out.println("releases-with-redeployment: " + r.toString())
+        System.out.println()
+        System.out.println()
     }
+
 }
 catch (Exception e)
 {
     e.printStackTrace()
     return false
 }
-
-if (client.artifactExists(artifact, "storage0", "releases-with-trash"))
-{
-    client.delete("storage0", "releases-with-trash", "org/carlspring/maven/test-project/1.0.5", true)
-}
-
-client.deleteTrash("storage0", "releases-with-trash")
-

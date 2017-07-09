@@ -1,12 +1,23 @@
-import org.carlspring.maven.commons.util.ArtifactUtils
 import org.carlspring.strongbox.client.ArtifactClient
 
 
-def artifact = ArtifactUtils.getArtifactFromGAV("org.carlspring.maven:test-project:1.0-SNAPSHOT");
-def client = ArtifactClient.testInstance;
-client.setUsername("invalid-user");
+def client = ArtifactClient.getTestInstance()
 
-// This should throw a ResponseException as the user is not valid.
-def response = client.artifactExistsStatusCode(artifact, "storage0", "snapshots");
+System.out.println()
+System.out.println()
+System.out.println(client.getHost())
+System.out.println(client.getUsername())
+System.out.println(client.getPassword())
+System.out.println()
+System.out.println()
 
-return response.getStatus() == 401;
+def response = client.pathExists("/storages/storage0/snapshots/org/carlspring/maven/test-project/1.0-SNAPSHOT/" +
+                                 "test-project-1.0-SNAPSHOT.jar")
+
+System.out.println()
+System.out.println()
+System.out.println("Path exists? " + response.toString())
+System.out.println()
+System.out.println()
+
+return !response

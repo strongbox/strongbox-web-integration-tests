@@ -57,7 +57,7 @@
         </server>
         <server>
             <id>snapshots-with-invalid-user</id>
-            <username>maven</username>
+            <username>invalid-user</username>
             <password>password1234</password>
         </server>
     </servers>

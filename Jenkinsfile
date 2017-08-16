@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            args '-v /mnt/ramdisk/10:/home/jenkins --cap-add SYS_ADMIN'
+            args '-v /mnt/ramdisk/3:/home/jenkins --cap-add SYS_ADMIN'
             image 'hub.carlspring.org/jenkins/opensuse-slave:latest'
         }
     }

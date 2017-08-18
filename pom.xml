@@ -373,7 +373,7 @@
 
                     <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
                          which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
-                    <plugin>
+<!--                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
                         <version>2.0.0</version>
@@ -386,11 +386,11 @@
                             <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                             <addTestClassPath>true</addTestClassPath>
 
-                            <!--
+                            
                             <pomExcludes>
                                 <exclude>deploy-with-invalid-user*/pom.xml</exclude>
                             </pomExcludes>
-                            -->
+                           
 
                             <properties>
                                 <strongbox.home>${project.build.directory}/strongbox</strongbox.home>
@@ -455,6 +455,45 @@
                                 <groupId>org.codehaus.groovy</groupId>
                                 <artifactId>groovy-all</artifactId>
                                 <version>${version.groovy}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+ -->
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>nuget-integration-tests</id>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <phase>test</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <scripts>
+                                <script>
+                                    file://${basedir}/src/nuget-it/deploy/test.groovy
+                                </script>
+                            </scripts>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-rest-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>                        
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>2.4.7</version>
+                                <scope>runtime</scope>
                             </dependency>
                         </dependencies>
                     </plugin>

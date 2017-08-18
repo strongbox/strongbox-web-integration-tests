@@ -41,23 +41,30 @@ println "ApiKey: $nugetApiKey\n\n"
 
 def storageUrl = String.format("%s/storages/nuget-common-storage/nuget-releases", client.getContextBaseUrl()) 
 println "Storage URL:  $storageUrl\n\n"
+   
+def configPath = "./../../../target/nuget-it/NuGet.config"
 
-new File("./src/nuget-it/deploy/NuGet.config").newWriter().withWriter { w ->
+new File("./target/nuget-it").mkdirs()
+new File("./target/nuget-it/NuGet.config").newWriter().withWriter { w ->
   w << ("<?xml version=\"1.0\" encoding=\"utf-8\"?><configuration></configuration>")
 }
 
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile ./NuGet.config",
+    "mono --runtime=v4.0 ./../nuget_v2.exe sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
     "strongbox",
     storageUrl,
     "admin",
-    "password"))
+    "password",
+    configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe config -set DefaultPushSource=%s -ConfigFile ./NuGet.config",
-    storageUrl))
+    "mono --runtime=v4.0 ./../nuget_v2.exe config -set DefaultPushSource=%s -ConfigFile %s",
+    storageUrl,
+    configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe setApiKey %s -Source %s -ConfigFile ./NuGet.config",
+    "mono --runtime=v4.0 ./../nuget_v2.exe setApiKey %s -Source %s -ConfigFile %s",
     nugetApiKey,
-    storageUrl))
+    storageUrl,
+    configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe push ./Org.Carlspring.Strongbox.Examples.Nuget.Mono.1.0.0.nupkg -ConfigFile ./NuGet.config"))
+    "mono --runtime=v4.0 ./../nuget_v2.exe push ./Org.Carlspring.Strongbox.Examples.Nuget.Mono.1.0.0.nupkg -ConfigFile %s",
+    configPath))

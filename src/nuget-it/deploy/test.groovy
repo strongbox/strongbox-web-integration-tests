@@ -1,10 +1,12 @@
 import org.carlspring.strongbox.client.RestClient
-
-def path = new File("./src/nuget-it/deploy")
+import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
+import java.nio.file.Paths
 
 def runCommand = { strList ->
     assert (strList instanceof String || (strList instanceof List && strList.each{ it instanceof String } ))
-    
+
+    def path = new File("./src/nuget-it/deploy")
+        
     println "Execute command[s]: "
     if(strList instanceof List) {
       strList.each{ println "${it} " }
@@ -29,7 +31,17 @@ def runCommand = { strList ->
 
 println "Test common-nuget-flow.groovy" + "\n\n"
 
-def sout = new StringBuilder(), serr = new StringBuilder()
+def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono" 
+def packageVersion = "1.0.0"
+def packageFileName = packageId + "." + packageVersion + ".nupkg";
+
+def baseDir = "./target/nuget-it"
+new File(baseDir).mkdirs()
+
+def nugetPackageGenerator = new NugetPackageGenerator(baseDir);
+nugetPackageGenerator.generateNugetPackage(packageId, packageVersion);
+def packageFilePath = Paths.get(baseDir).resolve(packageVersion).resolve(packageFileName);
+
 def client = RestClient.getTestInstanceLoggedInAsAdmin()
 
 println "Host name: " + client.getHost()
@@ -44,7 +56,6 @@ println "Storage URL:  $storageUrl\n\n"
    
 def configPath = "./../../../target/nuget-it/NuGet.config"
 
-new File("./target/nuget-it").mkdirs()
 new File("./target/nuget-it/NuGet.config").newWriter().withWriter { w ->
   w << ("<?xml version=\"1.0\" encoding=\"utf-8\"?><configuration></configuration>")
 }
@@ -66,5 +77,8 @@ runCommand(String.format(
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe push ./Org.Carlspring.Strongbox.Examples.Nuget.Mono.1.0.0.nupkg -ConfigFile %s",
+    "mono --runtime=v4.0 ./../nuget_v2.exe push ./../../../%s/%s/%s -ConfigFile %s",
+    baseDir,
+    packageVersion,
+    packageFileName,
     configPath))

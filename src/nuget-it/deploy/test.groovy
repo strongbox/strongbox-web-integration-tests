@@ -31,6 +31,9 @@ def runCommand = { strList ->
 
 println "Test common-nuget-flow.groovy" + "\n\n"
 
+def nugetExec = System.getenv("NUGET_V2_EXEC")
+assert nugetExec?.trim() : "\"NUGET_V2_EXEC\" environment variable need to be set"
+
 def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono" 
 def packageVersion = "1.0.0"
 def packageFileName = packageId + "." + packageVersion + ".nupkg";
@@ -61,23 +64,23 @@ new File("./target/nuget-it/NuGet.config").newWriter().withWriter { w ->
 }
 
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
     "strongbox",
     storageUrl,
     "admin",
     "password",
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe config -set DefaultPushSource=%s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec config -set DefaultPushSource=%s -ConfigFile %s",
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe setApiKey %s -Source %s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec setApiKey %s -Source %s -ConfigFile %s",
     nugetApiKey,
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 ./../nuget_v2.exe push ./../../../%s/%s/%s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec push ./../../../%s/%s/%s -ConfigFile %s",
     baseDir,
     packageVersion,
     packageFileName,

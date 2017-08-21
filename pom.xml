@@ -496,11 +496,6 @@
                                 <version>${project.version}</version>
                             </dependency>
                             <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-storage-nuget-layout-provider</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>                            
-                            <dependency>
                                 <groupId>org.codehaus.groovy</groupId>
                                 <artifactId>groovy-all</artifactId>
                                 <version>2.4.7</version>

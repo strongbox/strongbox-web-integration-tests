@@ -498,7 +498,7 @@
                             <dependency>
                                 <groupId>org.codehaus.groovy</groupId>
                                 <artifactId>groovy-all</artifactId>
-                                <version>2.4.7</version>
+                                <version>${version.groovy}</version>
                                 <scope>runtime</scope>
                             </dependency>
                         </dependencies>

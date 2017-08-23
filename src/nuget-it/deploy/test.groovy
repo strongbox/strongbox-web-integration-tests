@@ -2,10 +2,18 @@ import org.carlspring.strongbox.client.RestClient
 import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
 import java.nio.file.Paths
 
+println "Test common-nuget-flow.groovy" + "\n\n"
+
+def targetDir = project.build.directory
+println "Target directory: $targetDir\n\n"
+
+def targetPath = Paths.get(targetDir).resolve('nuget-it')
+Files.createDirectories(targetPath)
+
 def runCommand = { strList ->
     assert (strList instanceof String || (strList instanceof List && strList.each{ it instanceof String } ))
 
-    def path = new File("./src/nuget-it/deploy")
+    def path = targetPath.toFile()
         
     println "Execute command[s]: "
     if(strList instanceof List) {
@@ -29,11 +37,6 @@ def runCommand = { strList ->
     assert !proc.exitValue()
 }
 
-println "Test common-nuget-flow.groovy" + "\n\n"
-
-def targetDir = project.build.outputDirectory
-println "Target directory: $targetDir\n\n"
-
 def nugetExec = System.getenv("NUGET_V2_EXEC")
 assert nugetExec?.trim() : "\"NUGET_V2_EXEC\" environment variable need to be set"
 
@@ -41,8 +44,7 @@ def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono"
 def packageVersion = "1.0.0"
 def packageFileName = packageId + "." + packageVersion + ".nupkg";
 
-def baseDir = "./target/nuget-it"
-new File(baseDir).mkdirs()
+def baseDir = targetPath.toString()
 
 def nugetPackageGenerator = new NugetPackageGenerator(baseDir);
 nugetPackageGenerator.generateNugetPackage(packageId, packageVersion);

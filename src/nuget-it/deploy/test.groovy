@@ -86,8 +86,7 @@ runCommand(String.format(
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec push %s/%s/%s -ConfigFile %s",
-    baseDir,
+    "mono --runtime=v4.0 $nugetExec push %s/%s -ConfigFile %s",
     packageVersion,
     packageFileName,
     configPath))

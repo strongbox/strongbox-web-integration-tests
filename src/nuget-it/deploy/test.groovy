@@ -1,6 +1,7 @@
 import org.carlspring.strongbox.client.RestClient
 import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
 import java.nio.file.Paths
+import java.nio.file.Files
 
 println "Test common-nuget-flow.groovy" + "\n\n"
 

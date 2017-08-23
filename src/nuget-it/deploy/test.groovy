@@ -63,9 +63,9 @@ println "ApiKey: $nugetApiKey\n\n"
 def storageUrl = String.format("%s/storages/nuget-common-storage/nuget-releases", client.getContextBaseUrl()) 
 println "Storage URL:  $storageUrl\n\n"
    
-def configPath = "./../../../target/nuget-it/NuGet.config"
+def configPath = "$baseDir/NuGet.config"
 
-new File("./target/nuget-it/NuGet.config").newWriter().withWriter { w ->
+new File(configPath).newWriter().withWriter { w ->
   w << ("<?xml version=\"1.0\" encoding=\"utf-8\"?><configuration></configuration>")
 }
 
@@ -86,7 +86,7 @@ runCommand(String.format(
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec push ./../../../%s/%s/%s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec push %s/%s/%s -ConfigFile %s",
     baseDir,
     packageVersion,
     packageFileName,

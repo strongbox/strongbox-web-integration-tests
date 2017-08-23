@@ -31,6 +31,9 @@ def runCommand = { strList ->
 
 println "Test common-nuget-flow.groovy" + "\n\n"
 
+def targetDir = project.build.outputDirectory
+println "Target directory: $targetDir\n\n"
+
 def nugetExec = System.getenv("NUGET_V2_EXEC")
 assert nugetExec?.trim() : "\"NUGET_V2_EXEC\" environment variable need to be set"
 

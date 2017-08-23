@@ -64,23 +64,23 @@ new File("./target/nuget-it/NuGet.config").newWriter().withWriter { w ->
 }
 
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec sources Add -Name %s -Source '%s' -UserName %s -Password %s -ConfigFile '%s'",
     "strongbox",
     storageUrl,
     "admin",
     "password",
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec config -set DefaultPushSource=%s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec config -set DefaultPushSource='%s' -ConfigFile '%s'",
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec setApiKey %s -Source %s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec setApiKey %s -Source '%s' -ConfigFile '%s'",
     nugetApiKey,
     storageUrl,
     configPath))
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec push ./../../../%s/%s/%s -ConfigFile %s",
+    "mono --runtime=v4.0 $nugetExec push ./../../../%s/%s/%s -ConfigFile '%s'",
     baseDir,
     packageVersion,
     packageFileName,

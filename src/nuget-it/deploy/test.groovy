@@ -87,6 +87,7 @@ runCommand(String.format(
     nugetApiKey,
     storageUrl,
     configPath))
+configFile.setReadable(true, false)
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec push %s/%s -ConfigFile %s",
     packageVersion,

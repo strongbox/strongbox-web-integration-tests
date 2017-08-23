@@ -47,7 +47,11 @@ pipeline {
     }
     post {
         success {
-            build job: "strongbox/strongbox-web-core-pro/master", wait: false
+            script {
+                if(BRANCH_NAME == 'master') {
+                    build job: "strongbox/strongbox-web-core-pro/master", wait: false
+                }
+            }
         }
         changed {
             script {

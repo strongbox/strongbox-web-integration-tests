@@ -394,7 +394,7 @@
                         <configuration>
                             <scripts>
                                 <script>
-                                    file://${basedir}/src/nuget-it/deploy/test.groovy
+                                    file://${basedir}/src/nuget-it/test-nuget-common-flow.groovy
                                 </script>
                             </scripts>
                         </configuration>

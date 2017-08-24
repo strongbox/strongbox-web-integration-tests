@@ -3,7 +3,7 @@ import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
 import java.nio.file.Paths
 import java.nio.file.Files
 
-println "Test common-nuget-flow.groovy" + "\n\n"
+println "Test test-nuget-common-flow.groovy" + "\n\n"
 
 def targetDir = project.build.directory
 println "Target directory: $targetDir\n\n"

@@ -65,11 +65,9 @@ println "Storage URL:  $storageUrl\n\n"
    
 def configPath = "$baseDir/NuGet.config"
 
-def configFile = new File(configPath)
-configFile.newWriter().withWriter { w ->
+new File(configPath).newWriter().withWriter { w ->
   w << ("<?xml version=\"1.0\" encoding=\"utf-8\"?><configuration></configuration>")
 }
-configFile.setReadable(true, false)
 
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
@@ -87,7 +85,6 @@ runCommand(String.format(
     nugetApiKey,
     storageUrl,
     configPath))
-configFile.setReadable(true, false)
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec push %s/%s -ConfigFile %s",
     packageVersion,

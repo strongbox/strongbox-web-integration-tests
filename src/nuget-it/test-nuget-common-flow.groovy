@@ -14,6 +14,8 @@ Files.createDirectories(targetPath)
 def runCommand = { strList ->
     assert (strList instanceof String || (strList instanceof List && strList.each{ it instanceof String } ))
 
+    def output = new StringBuffer()
+    
     def path = targetPath.toFile()
         
     println "Execute command[s]: "
@@ -24,7 +26,10 @@ def runCommand = { strList ->
     }
     
     def proc = strList.execute(null, path)
-    proc.in.eachLine { line -> println line }
+    proc.in.eachLine { line -> 
+        output.append(line).append("\n")
+        println line 
+    }
     proc.out.close()
     proc.waitFor() 
   
@@ -36,10 +41,12 @@ def runCommand = { strList ->
     }
     
     assert !proc.exitValue()
+    
+    return output.toString()
 }
 
-def nugetExec = System.getenv("NUGET_V2_EXEC")
-assert nugetExec?.trim() : "\"NUGET_V2_EXEC\" environment variable need to be set"
+def nugetExec = System.getenv("NUGET_V3_EXEC")
+assert nugetExec?.trim() : "\"NUGET_V3_EXEC\" environment variable need to be set"
 
 def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono" 
 def packageVersion = "1.0.0"
@@ -69,6 +76,8 @@ new File(configPath).newWriter().withWriter { w ->
   w << ("<?xml version=\"1.0\" encoding=\"utf-8\"?><configuration></configuration>")
 }
 
+def output;
+
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
     "strongbox",
@@ -76,17 +85,36 @@ runCommand(String.format(
     "admin",
     "password",
     configPath))
+
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec config -set DefaultPushSource=%s -ConfigFile %s",
     storageUrl,
     configPath))
+
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec setApiKey %s -Source %s -ConfigFile %s",
     nugetApiKey,
     storageUrl,
     configPath))
+
 runCommand(String.format(
     "mono --runtime=v4.0 $nugetExec push %s/%s -ConfigFile %s",
     packageVersion,
     packageFileName,
     configPath))
+
+output = runCommand(String.format(
+    "mono --runtime=v4.0 $nugetExec list Org.Carlspring -ConfigFile %s",
+    configPath))
+assert output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
+
+//TODO: there is a Bug in `nuget.exe` client, `delete` command not working with Basic Authentication (see: https://github.com/NuGet/Home/issues/5831)
+//
+//output = runCommand(String.format(
+//    "mono --runtime=v4.0 $nugetExec delete Org.Carlspring.Strongbox.Examples.Nuget.Mono 1.0.0 -Source %s -NonInteractive -ConfigFile %s",
+//    storageUrl,
+//    configPath))
+//output = runCommand(String.format(
+//    "mono --runtime=v4.0 $nugetExec list Org.Carlspring -ConfigFile %s",
+//    configPath))
+//assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")

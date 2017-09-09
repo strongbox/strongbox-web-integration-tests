@@ -554,8 +554,8 @@
                                     <value>${dir.strongbox.vault}/storages</value>
                                 </systemProperty>
                                 <systemProperty>
-                                    <name>strongbox.security.jwt.disabled</name>
-                                    <value>${strongbox.security.jwt.disabled}</value>
+                                    <name>strongbox.download.indexes</name>
+                                    <value>false</value>
                                 </systemProperty>
 
                                 <systemProperty>

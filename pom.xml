@@ -377,45 +377,53 @@
                         </executions>
                     </plugin>
 
-                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
-                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
                     <plugin>
-                        <groupId>org.codehaus.gmavenplus</groupId>
-                        <artifactId>gmavenplus-plugin</artifactId>
+                        <groupId>org.carlspring.maven</groupId>
+                        <artifactId>system-properties-maven-plugin</artifactId>
+                        <version>1.0</version>
+
                         <executions>
                             <execution>
-                                <id>nuget-integration-tests</id>
+                                <id>set-properties</id>
+
+                                <phase>test-compile</phase>
                                 <goals>
-                                    <goal>execute</goal>
+                                    <goal>set</goal>
                                 </goals>
-                                <phase>test</phase>
+
+                                <configuration>
+                                    <properties>
+                                        <property>
+                                            <name>strongbox.port</name>
+                                            <value>${strongbox.port}</value>
+                                        </property>
+                                    </properties>
+                                </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <scripts>
-                                <script>file:///${basedir}/src/nuget-it/test-nuget-common-flow.groovy</script>
-                            </scripts>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-rest-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                                <version>${version.groovy}</version>
-                                <scope>runtime</scope>
-                            </dependency>
-                        </dependencies>
                     </plugin>
-                         
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                 To skip this profile, just execute the build like this:
+                 Under Linux (note the the exclamation mark needs to be escaped):
+                     mvn clean install -P\!run-maven-it-tests
+                 Under Windows
+                     mvn clean install -P!run-maven-it-tests
+              -->
+            <id>run-maven-it-tests</id>
+            <activation>
+                <property>
+                    <name>!skipTests</name>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
+                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
 <!--                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
@@ -429,11 +437,10 @@
                             <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                             <addTestClassPath>true</addTestClassPath>
 
-                            
+
                             <pomExcludes>
                                 <exclude>deploy-with-invalid-user*/pom.xml</exclude>
                             </pomExcludes>
-                           
 
                             <properties>
                                 <strongbox.home>${project.build.directory}/strongbox</strongbox.home>
@@ -501,35 +508,68 @@
                             </dependency>
                         </dependencies>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                 To skip this profile, just execute the build like this:
+                 Under Linux (note the the exclamation mark needs to be escaped):
+                     mvn clean install -P\!run-nuget-it-tests
+                 Under Windows
+                     mvn clean install -P!run-nuget-it-tests
+              -->
+            <id>run-nuget-it-tests</id>
+            <activation>
+                <property>
+                    <name>!skipTests</name>
+                </property>
+            </activation>
  -->
+            <build>
+                <plugins>
+                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
+                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
                     <plugin>
-                        <groupId>org.carlspring.maven</groupId>
-                        <artifactId>system-properties-maven-plugin</artifactId>
-                        <version>1.0</version>
-
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>set-properties</id>
-
-                                <phase>test-compile</phase>
+                                <id>nuget-integration-tests</id>
                                 <goals>
-                                    <goal>set</goal>
+                                    <goal>execute</goal>
                                 </goals>
-
-                                <configuration>
-                                    <properties>
-                                        <property>
-                                            <name>strongbox.port</name>
-                                            <value>${strongbox.port}</value>
-                                        </property>
-                                    </properties>
-                                </configuration>
+                                <phase>test</phase>
                             </execution>
                         </executions>
+                        <configuration>
+                            <scripts>
+                                <script>file:///${basedir}/src/nuget-it/test-nuget-common-flow.groovy</script>
+                            </scripts>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-rest-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>${version.groovy}</version>
+                                <scope>runtime</scope>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>run-jetty</id>
             <activation>
@@ -596,11 +636,6 @@
                                     <name>strongbox.storage.booter.basedir</name>
                                     <value>${dir.strongbox.vault}/storages</value>
                                 </systemProperty>
-                                <systemProperty>
-                                    <name>strongbox.download.indexes</name>
-                                    <value>false</value>
-                                </systemProperty>
-
                                 <systemProperty>
                                     <name>ehcache.disk.store.dir</name>
                                     <value>${dir.strongbox.vault}/cache</value>

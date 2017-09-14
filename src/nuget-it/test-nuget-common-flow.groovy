@@ -108,13 +108,11 @@ output = runCommand(String.format(
     configPath))
 assert output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
 
-//TODO: there is a Bug in `nuget.exe` client, `delete` command not working with Basic Authentication (see: https://github.com/NuGet/Home/issues/5831)
-//
-//output = runCommand(String.format(
-//    "mono --runtime=v4.0 $nugetExec delete Org.Carlspring.Strongbox.Examples.Nuget.Mono 1.0.0 -Source %s -NonInteractive -ConfigFile %s",
-//    storageUrl,
-//    configPath))
-//output = runCommand(String.format(
-//    "mono --runtime=v4.0 $nugetExec list Org.Carlspring -ConfigFile %s",
-//    configPath))
-//assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
+output = runCommand(String.format(
+    "mono --runtime=v4.0 $nugetExec delete Org.Carlspring.Strongbox.Examples.Nuget.Mono 1.0.0 -Source %s -NonInteractive -ConfigFile %s",
+    storageUrl,
+    configPath))
+output = runCommand(String.format(
+    "mono --runtime=v4.0 $nugetExec list Org.Carlspring -ConfigFile %s",
+    configPath))
+assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")

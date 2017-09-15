@@ -3,7 +3,7 @@ strongbox-web-integration-tests
 [![Master Build Status](https://dev.carlspring.org/jenkins/buildStatus/icon?job=strongbox/strongbox-web-integration-tests/master)](https://dev.carlspring.org/jenkins/job/strongbox/job/strongbox-web-integration-tests/job/master/)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/strongbox/strongbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-#### Introducion
+## Introducion
 
 This project contains the tests for the Strongbox Webapp Assembly and different  Repository layouts types.
 Followting Layouts supported for now:

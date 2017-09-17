@@ -79,7 +79,7 @@ new File(configPath).newWriter().withWriter { w ->
 def output;
 
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
+    "$nugetExec sources Add -Name %s -Source %s -UserName %s -Password %s -ConfigFile %s",
     "strongbox",
     storageUrl,
     "admin",
@@ -87,32 +87,32 @@ runCommand(String.format(
     configPath))
 
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec config -set DefaultPushSource=%s -ConfigFile %s",
+    "$nugetExec config -set DefaultPushSource=%s -ConfigFile %s",
     storageUrl,
     configPath))
 
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec setApiKey %s -Source %s -ConfigFile %s",
+    "$nugetExec setApiKey %s -Source %s -ConfigFile %s",
     nugetApiKey,
     storageUrl,
     configPath))
 
 runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec push %s/%s -ConfigFile %s",
+    "$nugetExec push %s/%s -ConfigFile %s",
     packageVersion,
     packageFileName,
     configPath))
 
 output = runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec list Org.Carlspring -ConfigFile %s",
+    "$nugetExec list Org.Carlspring -ConfigFile %s",
     configPath))
 assert output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
 
 output = runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec delete Org.Carlspring.Strongbox.Examples.Nuget.Mono 1.0.0 -Source %s -NonInteractive -ConfigFile %s",
+    "$nugetExec delete Org.Carlspring.Strongbox.Examples.Nuget.Mono 1.0.0 -Source %s -NonInteractive -ConfigFile %s",
     storageUrl,
     configPath))
 output = runCommand(String.format(
-    "mono --runtime=v4.0 $nugetExec list Org.Carlspring -ConfigFile %s",
+    "$nugetExec list Org.Carlspring -ConfigFile %s",
     configPath))
 assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")

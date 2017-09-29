@@ -13,7 +13,6 @@
     </parent>
 
     <artifactId>strongbox-web-integration-tests</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Strongbox: Integration Tests [Web]</name>
@@ -50,6 +49,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -543,7 +546,9 @@
                         </executions>
                         <configuration>
                             <scripts>
+                                <script>file:///${basedir}/src/nuget-it/test-prepare-nuget-config.groovy</script>
                                 <script>file:///${basedir}/src/nuget-it/test-nuget-common-flow.groovy</script>
+                                <script>file:///${basedir}/src/nuget-it/test-install-with-transitive-deps.groovy</script>
                             </scripts>
                         </configuration>
                         <dependencies>

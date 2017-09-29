@@ -548,7 +548,7 @@
                             <scripts>
                                 <script>file:///${basedir}/src/nuget-it/test-prepare-nuget-config.groovy</script>
                                 <script>file:///${basedir}/src/nuget-it/test-nuget-common-flow.groovy</script>
-                                <!-- script>file:///${basedir}/src/nuget-it/test-install-with-transitive-deps.groovy</script-->
+                                <script>file:///${basedir}/src/nuget-it/test-install-with-transitive-deps.groovy</script>
                             </scripts>
                         </configuration>
                         <dependencies>

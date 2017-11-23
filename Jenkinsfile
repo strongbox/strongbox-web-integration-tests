@@ -35,7 +35,7 @@ pipeline {
             steps {
                 withMaven(maven: 'maven-3.3.9', mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833')
                 {
-                    sh "cd '$RAMMOUNT' && mvn -U clean install -Dmaven.test.failure.ignore=true"
+                    sh "cd '$RAMMOUNT' && mvn -U clean install"
 
                     // unmount and copy back to hdd
                     sh "sudo umount --force $RAMMOUNT"

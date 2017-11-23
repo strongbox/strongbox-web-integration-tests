@@ -28,7 +28,8 @@ runCommand(targetPath, String.format(
     configPath))
 
 runCommand(targetPath, String.format(
-    "$nugetExec push %s/%s -ConfigFile %s",
+    "$nugetExec push %/%s/%s -ConfigFile %s",
+    "Org.Carlspring.Swit.Tiwtd",
     "1.0.0",
     "Org.Carlspring.Swit.Tiwtd.1.0.0.nupkg",
     configPath))

@@ -24,7 +24,8 @@ nugetPackageGenerator.generateNugetPackage(packageId, packageVersion);
 def storageUrl = getStorageUrl()
 
 runCommand(targetPath, String.format(
-    "$nugetExec push %s/%s -ConfigFile %s",
+    "$nugetExec push %s/%s/%s -ConfigFile %s",
+    packageId,
     packageVersion,
     packageFileName,
     configPath))

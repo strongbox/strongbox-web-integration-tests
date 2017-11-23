@@ -21,13 +21,15 @@ nugetPackageGenerator.generateNugetPackage("Org.Carlspring.Swit.Tiwtd", "1.0.0",
 def storageUrl = getStorageUrl()
 
 runCommand(targetPath, String.format(
-    "$nugetExec push %s/%s -ConfigFile %s",
+    "$nugetExec push %s/%s/%s -ConfigFile %s",
+    "Org.Carlspring.Swit.Tiwtd.Transitive",
     "1.0.0",
     "Org.Carlspring.Swit.Tiwtd.Transitive.1.0.0.nupkg",
     configPath))
 
 runCommand(targetPath, String.format(
-    "$nugetExec push %s/%s -ConfigFile %s",
+    "$nugetExec push %s/%s/%s -ConfigFile %s",
+    "Org.Carlspring.Swit.Tiwtd",
     "1.0.0",
     "Org.Carlspring.Swit.Tiwtd.1.0.0.nupkg",
     configPath))

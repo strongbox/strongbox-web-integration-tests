@@ -633,7 +633,7 @@
                                     <value>${strongbox.port}</value>
                                 </systemProperty>
                                 <systemProperty>
-                                    <name>repository.config.xml</name>
+                                    <name>strongbox.config.xml</name>
                                     <value>${dir.strongbox.home}/etc/conf/strongbox.xml</value>
                                 </systemProperty>
                                 <systemProperty>

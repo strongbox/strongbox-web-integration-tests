@@ -16,6 +16,14 @@ You will need the common environment to execute `Maven` Integration tests, this 
 These tests active by default, however you can skip them using following profile:
  - `-P\!run-maven-it-tests` for Linux;
  - `-P!run-maven-it-tests` for Windows;
+
+## Sbt tests
+
+You will need `Java 1.8` and `Sbt 1.1.0` installed in order to execute `Sbt` Integration tests.
+These tests active by default, however you can skip them using following profile:
+ - `-P\!run-sbt-it-tests` for Linux;
+ - `-P!run-sbt-it-tests` for Windows;
+ 
  
 ## Nuget tests
 

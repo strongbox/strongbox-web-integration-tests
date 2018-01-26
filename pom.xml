@@ -578,9 +578,9 @@
             <!--
                  To skip this profile, just execute the build like this:
                  Under Linux (note the the exclamation mark needs to be escaped):
-                     mvn clean install -P\!run-nuget-it-tests
+                     mvn clean install -P\!run-sbt-it-tests
                  Under Windows
-                     mvn clean install -P!run-nuget-it-tests
+                     mvn clean install -P!run-sbt-it-tests
               -->
             <id>run-sbt-it-tests</id>
             <activation>

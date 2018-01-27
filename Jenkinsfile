@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            args '-v /mnt/ramdisk/3:/home/jenkins --cap-add SYS_ADMIN'
+            args '-v /mnt/ramdisk/3:/home/jenkins --privileged=true'
             image 'hub.carlspring.org/jenkins/opensuse-slave:latest'
         }
     }
@@ -24,7 +24,8 @@ pipeline {
 
                     echo "Preparing workspace..."
                     sh "mkdir -p '$RAMWS'"
-                    sh "cp -R `ls -A '$HDDWS' | grep -v .git | grep -v ram` '$RAMWS'"
+                    //sh "cp -R `ls -A '$HDDWS' | grep -v .git | grep -v ram` '$RAMWS'"
+                    sh "find $HDDWS -maxdepth 1 ! -path 'ram' -exec cp -R {} '$RAMWS' \\;"
                     sh "mkdir -p '$RAMMOUNT'"
                     sh "sudo mount --bind  '$RAMWS' '$RAMMOUNT'"
                 }

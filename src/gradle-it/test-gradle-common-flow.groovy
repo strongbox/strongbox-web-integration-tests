@@ -20,7 +20,6 @@ def password = "password"
 
 def storageUrl = getStorageUrl()
 
-runCommand(targetPath, String.format(
-           "$gradleExec clean upload -Dcredentials.username=%s -Dcredentials.password=%s",
-           username,
-           password))
+runCommand(targetPath, String.format("$gradleExec clean upload -Dcredentials.username=%s -Dcredentials.password=%s",
+                                     username,
+                                     password))

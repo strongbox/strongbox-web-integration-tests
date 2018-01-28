@@ -49,6 +49,16 @@ class GradleIntegrationTest {
         return targetPath;
     }
 
+    def getGradlePath(project)
+    {
+        def baseDir = project.basedir
+        println "Base directory: $baseDir\n\n"
+
+        def gradlePath = Paths.get(baseDir.toString()).resolve('src\\gradle-it')
+        println "Gradle path: $gradlePath\n\n"
+        return gradlePath;
+    }
+
     def getStorageUrl()
     {
         def client = RestClient.getTestInstanceLoggedInAsAdmin()

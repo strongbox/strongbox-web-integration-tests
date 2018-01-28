@@ -17,9 +17,7 @@ configurations {
 }
 
 repositories {
-    maven { url "http://localhost:48080/storages/storage0/releases/" }
-    maven { url "http://localhost:48080/storages/storage0/snapshots/" }
-    mavenCentral()
+    maven { url "http://localhost:48080/storages/public/public-group/" }
 }
 
 dependencies {
@@ -38,6 +36,7 @@ uploadArchives {
             pom.groupId = "org.carlspring.strongbox.examples"
             pom.artifactId = "hello-strongbox-gradle"
             pom.version = "1.0-SNAPSHOT"
+            uniqueVersion = false
     }
 }
 

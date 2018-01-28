@@ -10,6 +10,7 @@ assert gradleExec?.trim() : "\"GRADLE_HOME\" environment variable need to be set
 
 def targetPath = getTargetPath(project)
 def baseDir = targetPath.toString()
+def gradlePath = getGradlePath(project)
 
 def $gradle = System.getenv("gradle")
 
@@ -20,6 +21,11 @@ def password = "password"
 
 def storageUrl = getStorageUrl()
 
-runCommand(targetPath, String.format("$gradleExec clean upload -Dcredentials.username=%s -Dcredentials.password=%s",
-                                     username,
-                                     password))
+
+runCommand(gradlePath, String.format("$gradleExec clean upload -Dcredentials.username=%s -Dcredentials.password=%s",
+                                    username,
+                                    password))
+
+assert targetPath.resolve('strongbox-vault\\storages\\storage0\\snapshots\\org\\carlspring\\strongbox\\' +
+                         'examples\\hello-strongbox-gradle\\1.0-SNAPSHOT').resolve("hello-strongbox-gradle-1.0-SNAPSHOT.jar")
+                         .toFile().exists()

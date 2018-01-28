@@ -15,7 +15,7 @@ def $gradle = System.getenv("gradle")
 
 System.out.println($gradle)
 
-def username = "maven"
+def username = "admin"
 def password = "password"
 
 def storageUrl = getStorageUrl()

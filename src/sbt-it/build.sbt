@@ -22,7 +22,8 @@ publishTo := {
 }
 
 libraryDependencies ++= Seq(
-  "junit" % "junit" % "4.11"
+  "junit" % "junit" % "4.11",
+  "ch.qos.logback" % "logback-core" % "1.2.3"
 )
 
 mainClass in (Compile, run) := Some("Main")

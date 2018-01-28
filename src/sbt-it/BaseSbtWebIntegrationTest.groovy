@@ -1,8 +1,23 @@
 import java.nio.file.Paths
+import org.apache.commons.io.FileUtils
 
 class BaseSbtWebIntegrationTest {
     def getTargetPath(project) {
         return Paths.get(System.getProperty("user.dir") + "/src/sbt-it")
+    }
+
+    def cleanIvyMavenCache() {
+        def userHome = new File(System.getProperty("user.home")) as File
+        def mavenCache = Paths.get(userHome.toURI()).resolve(".m2").resolve("repository").toFile()
+        def ivyCache = Paths.get(userHome.toURI()).resolve(".ivy2").resolve("cache").toFile()
+
+        FileUtils.deleteDirectory mavenCache
+        FileUtils.deleteDirectory ivyCache
+    }
+
+    def validateOutput(output) {
+        assert output.contains("success")
+        assert !output.contains("FAILURE")
     }
 
     def runCommand(targetPath, strList) {

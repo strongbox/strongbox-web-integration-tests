@@ -13,17 +13,16 @@ Followting Layouts supported for now:
 ## Maven tests
 
 You will need the common environment to execute `Maven` Integration tests, this is only `Java 1.8` and `Maven 3.x` installed.
-These tests active by default, however you can skip them using following profile:
- - `-P\!run-maven-it-tests` for Linux;
- - `-P!run-maven-it-tests` for Windows;
+These tests are executed by default, however you can skip them using following profile:
+ - `-P\!run-maven-it-tests` for Linux
+ - `-P!run-maven-it-tests` for Windows
 
-## Sbt tests
+## SBT tests
 
-You will need `Java 1.8` and `Sbt 1.1.0` installed in order to execute `Sbt` Integration tests.
-These tests active by default, however you can skip them using following profile:
- - `-P\!run-sbt-it-tests` for Linux;
- - `-P!run-sbt-it-tests` for Windows;
- 
+You will need `Java 1.8` and `SBT 1.1.0` installed in order to execute the `SBT` Integration tests.
+These tests are executed by default, however you can skip them using following profile:
+ - `-P\!run-sbt-it-tests` for Linux
+ - `-P!run-sbt-it-tests` for Windows
  
 ## Nuget tests
 
@@ -39,7 +38,7 @@ Here you just need to install `.Net Framework v4` and set the `NUGET_V3_EXEC` en
 
 To run Nuget tests here you will need `mono` to be installed. There were many problems with the compatibility of `nuget.exe` and `mono` versions, and the sutable combination is the following:
 
--  `Mono JIT compiler version 5.2.0.215 (tarball Mon Aug 14 15:46:23 UTC 2017)`
+- `Mono JIT compiler version 5.2.0.215 (tarball Mon Aug 14 15:46:23 UTC 2017)`
 - `nuget.exe` v3.4.4 ( [link](https://dist.nuget.org/win-x86-commandline/v3.4.4/nuget.exe) )
 - `NUGET_V3_EXEC` need to be set with value `mono \path\to\nuget.exe`  
 

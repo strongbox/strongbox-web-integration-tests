@@ -9,7 +9,7 @@ publishMavenStyle := true
 credentials += Credentials("Strongbox Repository Manager",
                            "localhost",
                            "admin",
-                            "password")
+                           "password")
 
 resolvers += "Strongbox" at "http://localhost:48080/storages/storage0/group-releases/"
 

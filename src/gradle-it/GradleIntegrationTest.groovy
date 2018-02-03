@@ -44,8 +44,7 @@ class GradleIntegrationTest {
         def targetDir = project.build.directory
         println "Target directory: $targetDir\n\n"
 
-        def targetPath = Paths.get(targetDir).resolve('gradle-it')
-        Files.createDirectories(targetPath)
+        def targetPath = Paths.get(targetDir)
         return targetPath;
     }
 

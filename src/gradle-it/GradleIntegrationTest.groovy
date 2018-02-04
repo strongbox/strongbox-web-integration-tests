@@ -1,6 +1,4 @@
-import org.carlspring.strongbox.client.RestClient
 import java.nio.file.Paths
-import java.nio.file.Files
 
 class GradleIntegrationTest {
 
@@ -53,17 +51,9 @@ class GradleIntegrationTest {
         def baseDir = project.basedir
         println "Base directory: $baseDir\n\n"
 
-        def gradlePath = Paths.get(baseDir.toString()).resolve('src\\gradle-it')
+        def gradlePath = Paths.get(baseDir.toString()).resolve('src/gradle-it')
         println "Gradle path: $gradlePath\n\n"
         return gradlePath;
-    }
-
-    def getStorageUrl()
-    {
-        def client = RestClient.getTestInstanceLoggedInAsAdmin()
-        def storageUrl = String.format("%s/storages/storage0/snapshots/", client.getContextBaseUrl())
-        println "Storage URL:  $storageUrl\n\n"
-        return storageUrl
     }
 
 }

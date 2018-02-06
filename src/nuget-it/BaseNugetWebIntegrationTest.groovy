@@ -65,7 +65,7 @@ class BaseNugetWebIntegrationTest {
     def getStorageUrl()
     {
         def client = RestClient.getTestInstanceLoggedInAsAdmin()
-        def storageUrl = String.format("%s/storages/nuget-common-storage/nuget-releases", client.getContextBaseUrl())
+        def storageUrl = String.format("%s/storages/storage-nuget/nuget-releases", client.getContextBaseUrl())
         println "Storage URL:  $storageUrl\n\n"
         return storageUrl
     }

@@ -2,6 +2,7 @@
 *.iml
 target
 /bin/
+src/gradle-it/build/
 
 .project
 .classpath

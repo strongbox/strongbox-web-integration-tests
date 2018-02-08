@@ -2,7 +2,7 @@ import org.apache.commons.io.FileUtils
 
 import java.nio.file.Paths
 
-def baseScript = new GroovyScriptEngine("$project.basedir/src/sbt-it").with {
+def baseScript = new GroovyScriptEngine("$project.basedir/").with {
     loadScriptByName('BaseSbtWebIntegrationTest.groovy')
 }
 this.metaClass.mixin baseScript

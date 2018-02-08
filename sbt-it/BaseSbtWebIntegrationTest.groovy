@@ -3,7 +3,7 @@ import org.apache.commons.io.FileUtils
 
 class BaseSbtWebIntegrationTest {
     def getTargetPath(project) {
-        return Paths.get(System.getProperty("user.dir") + "/src/sbt-it")
+        return Paths.get(System.getProperty("user.dir"))
     }
 
     def validateOutput(output) {

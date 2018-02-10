@@ -25,11 +25,11 @@ if (getLogbackCoreDirectory().exists())
 
 assert !getLogbackCoreDirectory().exists()
 
-def targetPath = getTargetPath(project).resolve('common-flow')
+def executionPath = getExecutionPath(project).resolve('common-flow')
 
-validateOutput runCommand(targetPath, "sbt compile")
-validateOutput runCommand(targetPath, "sbt assembly")
-validateOutput runCommand(targetPath, "sbt publish")
+validateOutput runCommand(executionPath, "sbt compile")
+validateOutput runCommand(executionPath, "sbt assembly")
+validateOutput runCommand(executionPath, "sbt publish")
 
 assert getLogbackCoreDirectory().exists()
 assert getLogbackJarFile().exists()

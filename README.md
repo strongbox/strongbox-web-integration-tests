@@ -12,21 +12,13 @@ Followting Layouts supported for now:
 - Sbt tests, which are Groovy scripts;
 - Gradle tests, which are Groovy scripts;
 
-
 ## Maven tests
 
 You will need the common environment to execute `Maven` Integration tests, this is only `Java 1.8` and `Maven 3.x` installed.
-These tests are executed by default, however you can skip them using following profile:
- - `-P\!run-maven-it-tests` for Linux
- - `-P!run-maven-it-tests` for Windows
 
 ## SBT tests
 
 You will need `Java 1.8` and `SBT 1.1.0` installed in order to execute the `SBT` Integration tests.
-These tests are executed by default, however you can skip them using following profile:
- - `-P\!run-sbt-it-tests` for Linux
- - `-P!run-sbt-it-tests` for Windows
- 
 
 ## Nuget tests
 

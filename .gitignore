@@ -10,3 +10,6 @@ target
 .classpath
 .settings
 .factorypath
+
+sbt/src/it/**/project
+!sbt/src/it/**/project/plugins.sbt

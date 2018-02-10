@@ -1,4 +1,4 @@
-def baseScript = new GroovyScriptEngine( "$project.basedir/" ).with {
+def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName( 'GradleIntegrationTest.groovy' )
 }
 this.metaClass.mixin baseScript
@@ -7,6 +7,8 @@ println "Test test-gradle-common-flow.groovy" + "\n\n"
 
 def targetPath = getTargetPath(project)
 def gradlePath = getGradlePath(project)
+def executionPath = gradlePath.resolve('src').resolve('it').resolve('common-flow')
+
 
 def gradlewName;
 
@@ -24,7 +26,7 @@ def password = "password"
 
 System.out.println(gradleExec)
 
-runCommand(gradlePath, String.format("$gradleExec upload -Dcredentials.username=%s -Dcredentials.password=%s",
+runCommand(executionPath, String.format("$gradleExec upload -Dcredentials.username=%s -Dcredentials.password=%s",
                                     username,
                                     password))
 

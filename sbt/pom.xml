@@ -548,7 +548,7 @@
                         </executions>
                         <configuration>
                             <scripts>
-                                <script>file:///${basedir}/test-sbt-common-flow.groovy</script>
+                                <script>file:///${basedir}/src/it/common-flow/test-sbt-common-flow.groovy</script>
                             </scripts>
                         </configuration>
                         <dependencies>

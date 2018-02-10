@@ -1,4 +1,4 @@
-def baseScript = new GroovyScriptEngine( "$project.basedir/src/gradle-it" ).with {
+def baseScript = new GroovyScriptEngine( "$project.basedir/" ).with {
     loadScriptByName( 'GradleIntegrationTest.groovy' )
 }
 this.metaClass.mixin baseScript

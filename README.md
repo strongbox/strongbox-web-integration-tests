@@ -8,7 +8,10 @@ strongbox-web-integration-tests
 This project contains the tests for the Strongbox Webapp Assembly and different  Repository layouts types.
 Followting Layouts supported for now:
 - Maven tests, based on `maven-invoker-plugin`;
-- Nuget tests, which are just Groovy scripts;
+- Nuget tests, which are Groovy scripts;
+- Sbt tests, which are Groovy scripts;
+- Gradle tests, which are Groovy scripts;
+
 
 ## Maven tests
 

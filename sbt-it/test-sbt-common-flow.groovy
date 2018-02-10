@@ -27,7 +27,6 @@ assert !getLogbackCoreDirectory().exists()
 
 def targetPath = getTargetPath(project)
 
-validateOutput runCommand(targetPath, "sbt clean")
 validateOutput runCommand(targetPath, "sbt compile")
 validateOutput runCommand(targetPath, "sbt assembly")
 validateOutput runCommand(targetPath, "sbt publish")

@@ -44,7 +44,7 @@ class BaseNugetWebIntegrationTest {
         def targetDir = project.build.directory
         println "Target directory: $targetDir\n\n"
         
-        def targetPath = Paths.get(targetDir).resolve('nuget-it')
+        def targetPath = Paths.get(targetDir).resolve('it')
         Files.createDirectories(targetPath)
         return targetPath;
     }

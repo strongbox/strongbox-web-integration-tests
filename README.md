@@ -5,43 +5,32 @@ strongbox-web-integration-tests
 
 ## Introduction
 
-This project contains the tests for the Strongbox Webapp Assembly and different  Repository layouts types.
-Followting Layouts supported for now:
-- Maven tests, based on `maven-invoker-plugin`;
-- Nuget tests, which are just Groovy scripts;
+This project contains various integration tests for the Strongbox project and the different repository layout formats supported by it. The following build tools have Groovy-based integration tests:
+* Gradle
+* Maven (these tests are using the `maven-invoker-plugin` that starts Maven during the build and runs various build operations)
+* NuGet
+* SBT
 
 ## Maven tests
 
 You will need the common environment to execute `Maven` Integration tests, this is only `Java 1.8` and `Maven 3.x` installed.
-These tests are executed by default, however you can skip them using following profile:
- - `-P\!run-maven-it-tests` for Linux
- - `-P!run-maven-it-tests` for Windows
 
 ## SBT tests
 
-You will need `Java 1.8` and `SBT 1.1.0` installed in order to execute the `SBT` Integration tests.
-These tests are executed by default, however you can skip them using following profile:
- - `-P\!run-sbt-it-tests` for Linux
- - `-P!run-sbt-it-tests` for Windows
- 
-## Nuget tests
+You will need SBT `1.1.0` installed in order to execute the `SBT` Integration tests.
 
-To run Nuget tests you will also need `Java 1.8` and `Maven 3.x` installed, and some `.Net` related environment (depends on you OS).
-Regardless of operating system you will need to download `nuget.exe` v3.4.4 [here](https://dist.nuget.org/win-x86-commandline/v3.4.4/nuget.exe)
+## NuGet tests
 
+You will need NuGet `3.4.4` in order to be able to run the tests. You can get it from [here](https://dist.nuget.org/win-x86-commandline/v3.4.4/nuget.exe).
 
-#### Windows
+### Windows
 
 Here you just need to install `.Net Framework v4` and set the `NUGET_V3_EXEC` environment variable with value `c:/path/to/nuget.exe`.
 
-#### Linux
+### Linux
 
 To run Nuget tests here you will need `mono` to be installed. There were many problems with the compatibility of `nuget.exe` and `mono` versions, and the sutable combination is the following:
 
-- `Mono JIT compiler version 5.2.0.215 (tarball Mon Aug 14 15:46:23 UTC 2017)`
+-  `Mono JIT compiler version 5.2.0.215 (tarball Mon Aug 14 15:46:23 UTC 2017)`
 - `nuget.exe` v3.4.4 ( [link](https://dist.nuget.org/win-x86-commandline/v3.4.4/nuget.exe) )
-- `NUGET_V3_EXEC` need to be set with value `mono \path\to\nuget.exe`  
-
-Also you can skip Nuget tests using following profile:
- - `-P\!run-nuget-it-tests` for Linux;
- - `-P!run-nuget-it-tests` for Windows;
+- `NUGET_V3_EXEC` need to be set with value `mono \path\to\nuget.exe`

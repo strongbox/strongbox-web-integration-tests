@@ -2,9 +2,14 @@
 *.iml
 target
 /bin/
-src/gradle-it/build/
+/gradle/build/
+/gradle/.gradle
+/sbt/project/build.properties
 
 .project
 .classpath
 .settings
 .factorypath
+
+sbt/src/it/**/project
+!sbt/src/it/**/project/plugins.sbt

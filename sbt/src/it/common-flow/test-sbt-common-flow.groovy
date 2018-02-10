@@ -2,7 +2,7 @@ import org.apache.commons.io.FileUtils
 
 import java.nio.file.Paths
 
-def baseScript = new GroovyScriptEngine("$project.basedir/src/sbt-it").with {
+def baseScript = new GroovyScriptEngine("$project.basedir/src/it").with {
     loadScriptByName('BaseSbtWebIntegrationTest.groovy')
 }
 this.metaClass.mixin baseScript
@@ -25,12 +25,11 @@ if (getLogbackCoreDirectory().exists())
 
 assert !getLogbackCoreDirectory().exists()
 
-def targetPath = getTargetPath(project)
+def executionPath = getExecutionPath(project).resolve('common-flow')
 
-validateOutput runCommand(targetPath, "sbt clean")
-validateOutput runCommand(targetPath, "sbt compile")
-validateOutput runCommand(targetPath, "sbt assembly")
-validateOutput runCommand(targetPath, "sbt publish")
+validateOutput runCommand(executionPath, "sbt compile")
+validateOutput runCommand(executionPath, "sbt assembly")
+validateOutput runCommand(executionPath, "sbt publish")
 
 assert getLogbackCoreDirectory().exists()
 assert getLogbackJarFile().exists()

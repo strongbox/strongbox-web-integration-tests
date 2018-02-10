@@ -63,7 +63,7 @@
             <artifactId>strongbox-storage-nuget-layout-provider</artifactId>
             <type>test-jar</type>
             <version>${project.version}</version>
-        </dependency>    
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>strongbox-security-api</artifactId>
@@ -412,171 +412,6 @@
             <!--
                  To skip this profile, just execute the build like this:
                  Under Linux (note the the exclamation mark needs to be escaped):
-                     mvn clean install -P\!run-maven-it-tests
-                 Under Windows
-                     mvn clean install -P!run-maven-it-tests
-              -->
-            <id>run-maven-it-tests</id>
-            <activation>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-
-            <build>
-                <plugins>
-                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
-                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
-                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-invoker-plugin</artifactId>
-                        <version>2.0.0</version>
-
-                        <configuration>
-                            <debug>true</debug>
-                            <preBuildHookScript>clean</preBuildHookScript>
-                            <postBuildHookScript>verify</postBuildHookScript>
-                            <settingsFile>src/it/settings.xml</settingsFile>
-                            <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                            <addTestClassPath>true</addTestClassPath>
-
-
-                            <pomExcludes>
-                                <exclude>deploy-with-invalid-user*/pom.xml</exclude>
-                                <exclude>deploy-large-file/pom.xml</exclude>
-                            </pomExcludes>
-
-                            <properties>
-                                <strongbox.home>${project.build.directory}/strongbox</strongbox.home>
-                                <strongbox.vault>${project.build.directory}/strongbox-vault</strongbox.vault>
-                                <strongbox.storage.booter.basedir>${basedir}/target/storages</strongbox.storage.booter.basedir>
-                                <strongbox.host>${strongbox.host}</strongbox.host>
-                                <strongbox.port>${strongbox.port}</strongbox.port>
-                                <logback.configurationFile>${dir.strongbox.home}/etc/logback.xml</logback.configurationFile>
-                                <logging.config.file>${project.build.directory}/strongbox/etc/logback.xml</logging.config.file>
-                                <logging.dir>${dir.strongbox.vault}/logs</logging.dir>
-                                <java.io.tmpdir>${dir.strongbox.vault}/tmp</java.io.tmpdir>
-                                <ehcache.disk.store.dir>${dir.strongbox.vault}/cache</ehcache.disk.store.dir>
-                            </properties>
-                        </configuration>
-
-                        <executions>
-                            <execution>
-                                <id>invoker-integration-tests</id>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-
-                                <phase>test</phase>
-                            </execution>
-                        </executions>
-
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-commons</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-rest-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-storage-api</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>com.fasterxml.jackson.jaxrs</groupId>
-                                <artifactId>jackson-jaxrs-json-provider</artifactId>
-                                <version>${version.jackson}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.carlspring.maven</groupId>
-                                <artifactId>maven-commons</artifactId>
-                                <version>${version.carlspring.maven.commons}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                                <version>${version.groovy}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <!--
-                 To skip this profile, just execute the build like this:
-                 Under Linux (note the the exclamation mark needs to be escaped):
-                     mvn clean install -P\!run-gradle-it-tests
-                 Under Windows
-                     mvn clean install -P!run-gradle-it-tests
-              -->
-            <id>run-gradle-it-tests</id>
-            <activation>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
-                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
-                    <plugin>
-                        <groupId>org.codehaus.gmavenplus</groupId>
-                        <artifactId>gmavenplus-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>gradle-integration-tests</id>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <scripts>
-                                <script>file:///${basedir}/src/gradle-it/test-gradle-common-flow.groovy</script>
-                            </scripts>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-rest-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                                <version>${version.groovy}</version>
-                                <scope>runtime</scope>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!--
-                 To skip this profile, just execute the build like this:
-                 Under Linux (note the the exclamation mark needs to be escaped):
                      mvn clean install -P\!run-nuget-it-tests
                  Under Windows
                      mvn clean install -P!run-nuget-it-tests
@@ -605,9 +440,9 @@
                         </executions>
                         <configuration>
                             <scripts>
-                                <script>file:///${basedir}/src/nuget-it/test-prepare-nuget-config.groovy</script>
-                                <script>file:///${basedir}/src/nuget-it/test-nuget-common-flow.groovy</script>
-                                <script>file:///${basedir}/src/nuget-it/test-install-with-transitive-deps.groovy</script>
+                                <script>file:///${basedir}/src/it/test-prepare-nuget-config.groovy</script>
+                                <script>file:///${basedir}/src/it/test-nuget-common-flow.groovy</script>
+                                <script>file:///${basedir}/src/it/test-install-with-transitive-deps.groovy</script>
                             </scripts>
                         </configuration>
                         <dependencies>
@@ -626,69 +461,6 @@
                                 <artifactId>groovy-all</artifactId>
                                 <version>${version.groovy}</version>
                                 <scope>runtime</scope>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!--
-                 To skip this profile, just execute the build like this:
-                 Under Linux (note the the exclamation mark needs to be escaped):
-                     mvn clean install -P\!run-sbt-it-tests
-                 Under Windows
-                     mvn clean install -P!run-sbt-it-tests
-              -->
-            <id>run-sbt-it-tests</id>
-            <activation>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <!-- This plugin needs to be defined first, as the execution of the Jetty Maven plugin
-                         which shuts down Jetty overlaps with this and shuts it down before the tests are done.-->
-                    <plugin>
-                        <groupId>org.codehaus.gmavenplus</groupId>
-                        <artifactId>gmavenplus-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sbt-integration-tests</id>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <scripts>
-                                <script>file:///${basedir}/src/sbt-it/test-sbt-common-flow.groovy</script>
-                            </scripts>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.carlspring.strongbox</groupId>
-                                <artifactId>strongbox-rest-client</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                                <version>${version.groovy}</version>
-                                <scope>runtime</scope>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.commons</groupId>
-                                <artifactId>commons-io</artifactId>
-                                <version>1.3.2</version>
                             </dependency>
                         </dependencies>
                     </plugin>

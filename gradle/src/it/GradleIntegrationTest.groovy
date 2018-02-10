@@ -51,7 +51,7 @@ class GradleIntegrationTest {
         def baseDir = project.basedir
         println "Base directory: $baseDir\n\n"
 
-        def gradlePath = Paths.get(baseDir.toString()).resolve('src/gradle-it')
+        def gradlePath = Paths.get(baseDir.toString())
         println "Gradle path: $gradlePath\n\n"
         return gradlePath;
     }

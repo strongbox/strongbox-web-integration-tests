@@ -1,6 +1,6 @@
 import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
 
-def baseScript = new GroovyScriptEngine( "$project.basedir/src/nuget-it" ).with {
+def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName( 'BaseNugetWebIntegrationTest.groovy' )
   }
 this.metaClass.mixin baseScript

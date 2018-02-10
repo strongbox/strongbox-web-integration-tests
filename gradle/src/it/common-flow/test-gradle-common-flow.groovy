@@ -1,4 +1,4 @@
-def baseScript = new GroovyScriptEngine( "$project.basedir/src/gradle-it" ).with {
+def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName( 'GradleIntegrationTest.groovy' )
 }
 this.metaClass.mixin baseScript
@@ -7,6 +7,8 @@ println "Test test-gradle-common-flow.groovy" + "\n\n"
 
 def targetPath = getTargetPath(project)
 def gradlePath = getGradlePath(project)
+def executionPath = gradlePath.resolve('src').resolve('it').resolve('common-flow')
+
 
 def gradlewName;
 
@@ -24,13 +26,9 @@ def password = "password"
 
 System.out.println(gradleExec)
 
-runCommand(gradlePath, String.format("$gradleExec upload -Dcredentials.username=%s -Dcredentials.password=%s",
+runCommand(executionPath, String.format("$gradleExec upload -Dcredentials.username=%s -Dcredentials.password=%s",
                                     username,
                                     password))
-
-// check if dependency was resolved from Strongbox
-assert targetPath.resolve('strongbox-vault/storages/storage-common-proxies/carlspring/com/fasterxml/jackson/core/' +
-                          '/jackson-databind/2.9.4/').resolve('jackson-databind-2.9.4.jar').toFile().exists();
 
 // check if artifact was uploaded to Strongbox
 assert targetPath.resolve('strongbox-vault/storages/storage0/snapshots/org/carlspring/strongbox/' +

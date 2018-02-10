@@ -2,9 +2,9 @@
 *.iml
 target
 /bin/
-/gradle-it/build/
-/gradle-it/.gradle
-/sbt-it/project/build.properties
+/gradle/build/
+/gradle/.gradle
+/sbt/project/build.properties
 
 .project
 .classpath

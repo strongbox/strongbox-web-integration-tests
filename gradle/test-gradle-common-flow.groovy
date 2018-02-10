@@ -28,10 +28,6 @@ runCommand(gradlePath, String.format("$gradleExec upload -Dcredentials.username=
                                     username,
                                     password))
 
-// check if dependency was resolved from Strongbox
-assert targetPath.resolve('strongbox-vault/storages/storage-common-proxies/carlspring/com/fasterxml/jackson/core/' +
-                          '/jackson-databind/2.9.4/').resolve('jackson-databind-2.9.4.jar').toFile().exists();
-
 // check if artifact was uploaded to Strongbox
 assert targetPath.resolve('strongbox-vault/storages/storage0/snapshots/org/carlspring/strongbox/' +
                          'examples/hello-strongbox-gradle/1.0-SNAPSHOT')

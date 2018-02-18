@@ -41,7 +41,7 @@ class NpmIntegrationTest {
     {
         def projectDir = project.basedir
 
-        def executionPath = Paths.get(projectDir.toString()).resolve('src/it/common-flow')
+        def executionPath = Paths.get(projectDir.toString()).resolve('src/it/common-flow/src')
         println "Execution directory: $executionPath\n\n"
 
         return executionPath

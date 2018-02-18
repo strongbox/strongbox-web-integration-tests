@@ -7,13 +7,14 @@ println "Test test-npm-common-flow.groovy" + "\n\n"
 
 def npmExec
 def publishSuccessMsg = "+ @strongbox/hello-strongbox-npm@1.0.0"
-def resolveSuccessMsg = "`-- @strongbox/hello-strongbox-npm@1.0.0"
+def resolveSuccessMsgWindows = "`-- @strongbox/hello-strongbox-npm@1.0.0"
+def resolveSuccessMsgUnix = "└─┬ @strongbox/hello-strongbox-npm@1.0.0"
 
 // Determine OS and appropriate commands
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
     npmExec = "cmd /c npm "
 } else {
-    npmExec = "sh -c npm "
+    npmExec = "npm "
 }
 
 def executionPath = getExecutionPath(project)
@@ -30,4 +31,4 @@ runCommand(executionPath, npmExec + "install")
 
 commandOutput = runCommand(executionPath, npmExec + "ls")
 
-assert commandOutput.contains(resolveSuccessMsg)
+assert commandOutput.contains(resolveSuccessMsgWindows) || commandOutput.contains(resolveSuccessMsgUnix)

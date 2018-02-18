@@ -1,0 +1,27 @@
+{
+    "name": "@strongbox/hello-strongbox-npm",
+    "version": "1.0.0",
+    "description": "Just a method that prints 'hello, world'",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/strongbox/strongbox-examples"
+    },
+    "homepage": "https://github.com/strongbox/strongbox-examples",
+    "keywords": [
+        "hello",
+        "world",
+        "example",
+        "npm",
+        "strongbox"
+    ],
+    "main": "index.js",
+    "author": {
+        "name": "Sergey Bespalov",
+        "email": "serge.bespalov@gmail.com",
+        "url": "https://github.com/strongbox"
+    },
+    "dependencies": {
+        "@strongbox/hello-strongbox-npm": "http://localhost:48080/storages/storage-common-npm/npm-releases/@strongbox/hello-strongbox-npm/1.0.0/hello-strongbox-npm-1.0.0.tgz"
+    },
+    "license": "Apache-2.0"
+}

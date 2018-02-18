@@ -1,5 +1,3 @@
-import java.nio.file.Paths
-
 def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName('NpmIntegrationTest.groovy')
 }
@@ -7,17 +5,29 @@ this.metaClass.mixin baseScript
 
 println "Test test-npm-common-flow.groovy" + "\n\n"
 
-def npmExec;
+def npmExec
+def publishSuccessMsg = "+ @strongbox/hello-strongbox-npm@1.0.0"
+def resolveSuccessMsg = "`-- @strongbox/hello-strongbox-npm@1.0.0"
 
 // Determine OS and appropriate commands
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-    npmExec = 'cmd /c npm'
+    npmExec = "cmd /c npm "
 } else {
-    npmExec = 'sh -c npm'
+    npmExec = "sh -c npm "
 }
 
-def targetPath = getTargetPath(project)
 def executionPath = getExecutionPath(project)
+def commandOutput
 
-runCommand(executionPath, 'cmd /c npm -v')
+// Publish package to Strongbox and check output for success
+commandOutput = runCommand(executionPath, npmExec + "publish")
 
+assert commandOutput.contains(publishSuccessMsg)
+
+// Resolve dependency via Strongbox and check output for success
+
+runCommand(executionPath, npmExec + "install")
+
+commandOutput = runCommand(executionPath, npmExec + "ls")
+
+assert commandOutput.contains(resolveSuccessMsg)

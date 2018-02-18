@@ -37,23 +37,14 @@ class NpmIntegrationTest {
         return output.toString()
     }
 
-    def getTargetPath(project)
-    {
-        def targetDir = project.build.directory
-        println "Target directory: $targetDir\n\n"
-
-        def targetPath = Paths.get(targetDir)
-        return targetPath;
-    }
-
     def getExecutionPath(project)
     {
-        def projectDir = project.basedir;
+        def projectDir = project.basedir
 
-        def executionPath = Paths.get(projectDir.toString()).resolve('src/it/common-flow');
+        def executionPath = Paths.get(projectDir.toString()).resolve('src/it/common-flow')
         println "Execution directory: $executionPath\n\n"
 
-        return executionPath;
+        return executionPath
     }
 
 }

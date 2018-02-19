@@ -7,8 +7,7 @@ println "Test test-npm-common-flow.groovy" + "\n\n"
 
 def npmExec
 def publishSuccessMsg = "+ @strongbox/hello-strongbox-npm@1.0.0"
-def resolveSuccessMsgWindows = "`-- @strongbox/hello-strongbox-npm@1.0.0"
-def resolveSuccessMsgUnix = "└─┬ @strongbox/hello-strongbox-npm@1.0.0"
+def resolveFailureMsg = "npm ERR! missing: @strongbox/hello-strongbox-npm"
 
 // Determine OS and appropriate commands
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
@@ -31,4 +30,4 @@ runCommand(executionPath, npmExec + "install")
 
 commandOutput = runCommand(executionPath, npmExec + "ls")
 
-assert commandOutput.contains(resolveSuccessMsgWindows) || commandOutput.contains(resolveSuccessMsgUnix)
+assert !commandOutput.contains(resolveFailureMsg)

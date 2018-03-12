@@ -7,15 +7,15 @@
 
     <parent>
         <groupId>org.carlspring.strongbox</groupId>
-        <artifactId>strongbox-parent</artifactId>
+        <artifactId>strongbox-web-integration-tests-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../strongbox-web-integration-tests-parent</relativePath>
     </parent>
 
-    <artifactId>strongbox-web-integration-tests</artifactId>
+    <artifactId>strongbox-web-integration-tests-nuget</artifactId>
     <packaging>pom</packaging>
 
-    <name>Strongbox: Integration Tests [Web]</name>
+    <name>Strongbox: Web Integration Tests [Nuget]</name>
 
     <licenses>
         <license>
@@ -34,8 +34,8 @@
     <inceptionYear>2018</inceptionYear>
 
     <scm>
-        <connection>scm:git:https://github.com/strongbox/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https://github.com/strongbox/${project.artifactId}.git</developerConnection>
+        <connection>scm:git:https://github.com/strongbox/strongbox-web-integration-tests.git</connection>
+        <developerConnection>scm:git:https://github.com/strongbox/strongbox-web-integration-tests.git</developerConnection>
         <url>https://github.com/strongbox/${project.artifactId}/tree/${project.scm.tag}</url>
         <tag>master</tag>
     </scm>
@@ -231,183 +231,6 @@
             </properties>
         </profile>
 
-        <profile>
-            <id>run-it-tests</id>
-            <activation>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-
-            <properties>
-                <dir.strongbox.home>${project.build.directory}/strongbox</dir.strongbox.home>
-                <dir.strongbox.vault>${project.build.directory}/strongbox-vault</dir.strongbox.vault>
-                <dir.jetty.etc>${dir.strongbox.home}/etc/jetty</dir.jetty.etc>
-            </properties>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-
-                        <executions>
-                            <execution>
-                                <id>unpack-resources-logging</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-common-resources</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}/etc</outputDirectory>
-                                            <includes>logback.xml</includes>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>unpack-resources-etc</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-common-resources</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/**</includes>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>unpack-storage-resources</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-common-resources</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}/etc</outputDirectory>
-                                            <includes>logback.xml</includes>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-storage-api-resources</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/strongbox.xml</includes>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-storage-api-resources</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/security-users.xml</includes>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>unpack-user-management</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-user-management</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/security-users.xml</includes>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>unpack-web-resources</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>strongbox-web-resources</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>jar</type>
-
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/**,webapp/**</includes>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.carlspring.maven</groupId>
-                        <artifactId>system-properties-maven-plugin</artifactId>
-                        <version>1.0</version>
-
-                        <executions>
-                            <execution>
-                                <id>set-properties</id>
-
-                                <phase>test-compile</phase>
-                                <goals>
-                                    <goal>set</goal>
-                                </goals>
-
-                                <configuration>
-                                    <properties>
-                                        <property>
-                                            <name>strongbox.port</name>
-                                            <value>${strongbox.port}</value>
-                                        </property>
-                                    </properties>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <!--
                  To skip this profile, just execute the build like this:

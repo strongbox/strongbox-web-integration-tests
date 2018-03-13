@@ -1,10 +1,9 @@
 import org.carlspring.maven.commons.util.ArtifactUtils
 import org.carlspring.strongbox.client.ArtifactClient
 import org.carlspring.strongbox.client.RestClient
+import org.carlspring.strongbox.providers.layout.Maven2LayoutProvider
 import org.carlspring.strongbox.storage.repository.Repository
-import org.carlspring.strongbox.storage.repository.RepositoryLayoutEnum
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
-
 
 def artifact = ArtifactUtils.getArtifactFromGAV("org.carlspring.maven:test-project:1.0.3");
 def artifactClient = ArtifactClient.testInstance;
@@ -45,7 +44,7 @@ try
 
         // Create the test repository:
         def repository = new Repository(repositoryId)
-        repository.setLayout(RepositoryLayoutEnum.MAVEN_2.layout)
+        repository.setLayout(Maven2LayoutProvider.ALIAS)
         repository.setPolicy(RepositoryPolicyEnum.RELEASE.policy)
         repository.setTrashEnabled(true)
         repository.setStorage(storage)

@@ -31,7 +31,7 @@ pipeline {
 
                         dir("gradle") {
                             withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                                sh 'mvn clean install -U'
                             }
                         }
                     }
@@ -65,7 +65,7 @@ pipeline {
 
                         dir("maven") {
                             withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                                sh 'mvn clean install -U'
                             }
                         }
                     }
@@ -99,7 +99,7 @@ pipeline {
 
                         dir("nuget") {
                             withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                                sh 'mvn clean install -U'
                             }
                         }
                     }
@@ -133,7 +133,7 @@ pipeline {
 
                         dir("sbt") {
                             withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                                sh 'mvn clean install -U'
                             }
                         }
                     }

@@ -21,7 +21,7 @@ if (System.getProperty("os.name").toLowerCase().contains("windows")) {
 
 def gradleExec = gradlePath.resolve(gradlewName).toString();
 
-def username = "admin"
+def username = "user"
 def password = "password"
 
 System.out.println(gradleExec)

@@ -43,6 +43,7 @@
         <module>sbt</module>
         <module>nuget</module>
         <module>gradle</module>
+        <module>npm</module>
     </modules>
     
 </project>

@@ -1,6 +1,7 @@
-@Library('jenkins-shared-libraries@master')
+@Library('jenkins-shared-libraries')
 
 def workspaceUtils = new org.carlspring.jenkins.workspace.WorkspaceUtils();
+def mvnBaseLocalRepo = "/cache/${env.JOB_BASE_NAME}/.m2/repository";
 
 pipeline {
     agent none
@@ -28,10 +29,20 @@ pipeline {
 
                         sh "cat /etc/node"
                         sh "cat /etc/os-release"
+                        sh "gradle --version"
+                        sh "mvn -version"
 
-                        dir("gradle") {
-                            withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                        script {
+                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            sh "mkdir -p ${mvnLocalRepo}"
+
+                            dir("gradle") {
+                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                    // Download dependencies before build to avoid noise in logs.
+                                    sh 'mvn -T 1C dependency:go-offline -U'
+                                    // Build
+                                    sh 'mvn clean install'
+                                }
                             }
                         }
                     }
@@ -62,10 +73,19 @@ pipeline {
 
                         sh "cat /etc/node"
                         sh "cat /etc/os-release"
+                        sh "mvn -version"
 
-                        dir("maven") {
-                            withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                        script {
+                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            sh "mkdir -p ${mvnLocalRepo}"
+
+                            dir("maven") {
+                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                    // Download dependencies before build to avoid noise in logs.
+                                    sh 'mvn -T 1C dependency:go-offline -U'
+                                    // Build
+                                    sh 'mvn clean install'
+                                }
                             }
                         }
                     }
@@ -73,7 +93,7 @@ pipeline {
                         always {
                             // This is necessary, because Jenkins sometimes gets confused what's the CWD!
                             dir("") {
-                                archiveArtifacts 'gradle/target/**'
+                                archiveArtifacts 'maven/target/**'
                                 // Cleanup
                                 cleanWs deleteDirs: true, externalDelete: 'rm -rf %s', notFailBuild: true
                             }
@@ -81,7 +101,53 @@ pipeline {
                     }
                 }
 
-                stage('Nuget') {
+                stage('NPM') {
+                    agent {
+                        node {
+                            label "alpine:node-9.4"
+                            customWorkspace workspaceUtils.generateUniqueWorkspacePath()
+                        }
+                    }
+                    options {
+                        timeout(time: 1, unit: 'HOURS')
+                    }
+                    steps {
+                        echo "Node information:"
+
+                        sh "cat /etc/node"
+                        sh "cat /etc/os-release"
+                        sh "echo 'NPM version' && npm --version"
+                        sh "echo 'Node version' && node --version"
+                        sh "echo 'Yarn version' && yarn --version"
+                        sh "mvn -version"
+
+                        script {
+                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            sh "mkdir -p ${mvnLocalRepo}"
+
+                            dir("npm") {
+                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                    // Download dependencies before build to avoid noise in logs.
+                                    sh 'mvn -T 1C dependency:go-offline -U'
+                                    // Build
+                                    sh 'mvn clean install'
+                                }
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            // This is necessary, because Jenkins sometimes gets confused what's the CWD!
+                            dir("") {
+                                archiveArtifacts 'npm/target/**'
+                                // Cleanup
+                                cleanWs deleteDirs: true, externalDelete: 'rm -rf %s', notFailBuild: true
+                            }
+                        }
+                    }
+                }
+
+                stage('Nuget-mono') {
                     agent {
                         node {
                             label "alpine:nuget-3.4-mono"
@@ -96,10 +162,21 @@ pipeline {
 
                         sh "cat /etc/node"
                         sh "cat /etc/os-release"
+                        sh "\$NUGET_V3_EXEC | head -n1"
+                        sh "mono --version"
+                        sh "mvn -version"
 
-                        dir("nuget") {
-                            withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                        script {
+                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            sh "mkdir -p ${mvnLocalRepo}"
+
+                            dir("nuget") {
+                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                    // Download dependencies before build to avoid noise in logs.
+                                    sh 'mvn -T 1C dependency:go-offline -U'
+                                    // Build
+                                    sh 'mvn clean install'
+                                }
                             }
                         }
                     }
@@ -130,10 +207,19 @@ pipeline {
 
                         sh "cat /etc/node"
                         sh "cat /etc/os-release"
+                        sh "mvn -version"
 
-                        dir("sbt") {
-                            withMaven(mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
-                                sh 'mvn clean install'
+                        script {
+                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            sh "mkdir -p ${mvnLocalRepo}"
+
+                            dir("sbt") {
+                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                    // Download dependencies before build to avoid noise in logs.
+                                    sh 'mvn -T 1C dependency:go-offline -U'
+                                    // Build
+                                    sh 'mvn clean install'
+                                }
                             }
                         }
                     }
@@ -141,7 +227,7 @@ pipeline {
                         always {
                             // This is necessary, because Jenkins sometimes gets confused what's the CWD!
                             dir("") {
-                                archiveArtifacts 'gradle/target/**'
+                                archiveArtifacts 'sbt/target/**'
                                 // Cleanup
                                 cleanWs deleteDirs: true, externalDelete: 'rm -rf %s', notFailBuild: true
                             }
@@ -165,4 +251,5 @@ pipeline {
         }
     }
 }
+
 

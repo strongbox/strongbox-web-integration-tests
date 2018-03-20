@@ -163,6 +163,7 @@ pipeline {
                         sh "cat /etc/node"
                         sh "cat /etc/os-release"
                         sh "\$NUGET_V3_EXEC | head -n1"
+                        sh "mono --version"
                         sh "mvn -version"
 
                         script {

@@ -1,11 +1,9 @@
-import org.carlspring.maven.commons.util.ArtifactUtils
 import org.carlspring.strongbox.client.ArtifactClient
 import org.carlspring.strongbox.client.RestClient
 import org.carlspring.strongbox.providers.layout.Maven2LayoutProvider
 import org.carlspring.strongbox.storage.repository.Repository
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
 
-def artifact = ArtifactUtils.getArtifactFromGAV("org.carlspring.maven:test-project:1.0.3");
 def artifactClient = ArtifactClient.testInstance;
 def restClient = RestClient.getTestInstanceLoggedInAsAdmin()
 
@@ -57,7 +55,10 @@ try
         System.out.println()
         System.out.println()
     } else {
-        if (artifactClient.artifactExists(artifact, "storage0", "releases-with-trash"))
+
+        def path = "/storages/storage0/releases-with-trash/org/carlspring/maven/test-project/1.0.3"
+
+        if (artifactClient.pathExists(path))
         {
             artifactClient.delete("storage0", "releases-with-trash", "org/carlspring/maven/test-project/1.0.3");
         }

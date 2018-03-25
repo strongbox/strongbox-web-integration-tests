@@ -1,14 +1,12 @@
-import org.carlspring.maven.commons.util.ArtifactUtils
 import org.carlspring.strongbox.client.ArtifactClient
-
-
-def artifact = ArtifactUtils.getArtifactFromGAV("org.carlspring.maven:test-project:1.0.1");
 
 def client = ArtifactClient.testInstance;
 
-client.deleteArtifact(artifact, "storage0", "releases");
+client.delete("storage0", "releases","org/carlspring/maven/test-project/1.0.1/test-project-1.0.1.jar");
 
 def artifactFile = new File("target/storages/storage0/releases/" +
                             "org/carlspring/maven/test-project/1.0.1/test-project-1.0.1.jar").getAbsoluteFile();
 
-return !client.artifactExists(artifact, "storage0", "releases") && !artifactFile.exists();
+def path = "/storages/storage0/releases/org/carlspring/maven/test-project/1.0.1/test-project-1.0.1.jar"
+
+return !client.pathExists(path) && !artifactFile.exists();

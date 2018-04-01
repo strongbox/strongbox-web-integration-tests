@@ -237,6 +237,13 @@ pipeline {
             }
         }
     }
+    success {
+        script {
+            if(BRANCH_NAME == 'master') {
+                build job: "strongbox/strongbox-webapp/master", wait: false
+            }
+        }
+    }
     post {
         always {
             // Email notification

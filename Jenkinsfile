@@ -1,10 +1,14 @@
-@Library('jenkins-shared-libraries')
+@Library('jenkins-shared-libraries') _
 
-def workspaceUtils = new org.carlspring.jenkins.workspace.WorkspaceUtils();
-def mvnBaseLocalRepo = "/cache/${env.JOB_BASE_NAME}/.m2/repository";
+// Notification settings for "master" and "branch/pr"
+def notifyMaster = [notifyAdmins: true, recipients: [culprits(), requestor()]]
+def notifyBranch = [recipients: [brokenTestsSuspects(), requestor()]]
 
 pipeline {
     agent none
+    parameters {
+        booleanParam(defaultValue: true, description: 'Send email notification?', name: 'NOTIFY_EMAIL')
+    }
     options {
         timeout(time: 2, unit: 'HOURS')
         disableConcurrentBuilds()
@@ -18,26 +22,21 @@ pipeline {
                     agent {
                         node {
                             label "alpine:jdk8-gradle-4.5"
-                            customWorkspace workspaceUtils.generateUniqueWorkspacePath()
+                            customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }
                     options {
                         timeout(time: 1, unit: 'HOURS')
                     }
                     steps {
-                        echo "Node information:"
-
-                        sh "cat /etc/node"
-                        sh "cat /etc/os-release"
-                        sh "gradle --version"
-                        sh "mvn -version"
+                        nodeInfo("mvn gradle")
 
                         script {
-                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            def mvnLocalRepo = workspace().getStageSafeM2LocalRepoPath()
                             sh "mkdir -p ${mvnLocalRepo}"
 
                             dir("gradle") {
-                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                withMavenPlus(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
                                     // Download dependencies before build to avoid noise in logs.
                                     sh 'mvn -T 1C dependency:go-offline -U'
                                     // Build
@@ -62,25 +61,22 @@ pipeline {
                     agent {
                         node {
                             label "alpine:jdk8-mvn-3.3"
-                            customWorkspace workspaceUtils.generateUniqueWorkspacePath()
+                            customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }
                     options {
                         timeout(time: 1, unit: 'HOURS')
                     }
                     steps {
-                        echo "Node information:"
 
-                        sh "cat /etc/node"
-                        sh "cat /etc/os-release"
-                        sh "mvn -version"
+                         nodeInfo("mvn")
 
                         script {
-                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            def mvnLocalRepo = workspace().getStageSafeM2LocalRepoPath()
                             sh "mkdir -p ${mvnLocalRepo}"
 
                             dir("maven") {
-                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                withMavenPlus(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
                                     // Download dependencies before build to avoid noise in logs.
                                     sh 'mvn -T 1C dependency:go-offline -U'
                                     // Build
@@ -105,24 +101,18 @@ pipeline {
                     agent {
                         node {
                             label "alpine:node-9.4"
-                            customWorkspace workspaceUtils.generateUniqueWorkspacePath()
+                            customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }
                     options {
                         timeout(time: 1, unit: 'HOURS')
                     }
                     steps {
-                        echo "Node information:"
 
-                        sh "cat /etc/node"
-                        sh "cat /etc/os-release"
-                        sh "echo 'NPM version' && npm --version"
-                        sh "echo 'Node version' && node --version"
-                        sh "echo 'Yarn version' && yarn --version"
-                        sh "mvn -version"
+                        nodeInfo("mvn npm node yarn")
 
                         script {
-                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            def mvnLocalRepo = workspace().getStageSafeM2LocalRepoPath()
                             sh "mkdir -p ${mvnLocalRepo}"
 
                             dir("npm") {
@@ -151,27 +141,23 @@ pipeline {
                     agent {
                         node {
                             label "alpine:nuget-3.4-mono"
-                            customWorkspace workspaceUtils.generateUniqueWorkspacePath()
+                            customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }
                     options {
                         timeout(time: 1, unit: 'HOURS')
                     }
                     steps {
-                        echo "Node information:"
 
-                        sh "cat /etc/node"
-                        sh "cat /etc/os-release"
+                        nodeInfo("mvn mono")
                         sh "\$NUGET_V3_EXEC | head -n1"
-                        sh "mono --version"
-                        sh "mvn -version"
 
                         script {
-                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            def mvnLocalRepo = workspace().getStageSafeM2LocalRepoPath()
                             sh "mkdir -p ${mvnLocalRepo}"
 
                             dir("nuget") {
-                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                withMavenPlus(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
                                     // Download dependencies before build to avoid noise in logs.
                                     sh 'mvn -T 1C dependency:go-offline -U'
                                     // Build
@@ -196,25 +182,22 @@ pipeline {
                     agent {
                         node {
                             label "alpine:jdk8-sbt-1.1"
-                            customWorkspace workspaceUtils.generateUniqueWorkspacePath()
+                            customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }
                     options {
                         timeout(time: 1, unit: 'HOURS')
                     }
                     steps {
-                        echo "Node information:"
 
-                        sh "cat /etc/node"
-                        sh "cat /etc/os-release"
-                        sh "mvn -version"
+                        nodeInfo("mvn")
 
                         script {
-                            def mvnLocalRepo = workspaceUtils.generateStageSafeM2LocalRepoPath()
+                            def mvnLocalRepo = workspace().getStageSafeM2LocalRepoPath()
                             sh "mkdir -p ${mvnLocalRepo}"
 
                             dir("sbt") {
-                                withMaven(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
+                                withMavenPlus(mavenLocalRepo: mvnLocalRepo, mavenSettingsConfig: 'a5452263-40e5-4d71-a5aa-4fc94a0e6833') {
                                     // Download dependencies before build to avoid noise in logs.
                                     sh 'mvn -T 1C dependency:go-offline -U'
                                     // Build
@@ -245,18 +228,27 @@ pipeline {
                 }
             }
         }
-        always {
-            // Email notification
+        failure {
             script {
-                def email = new org.carlspring.jenkins.notification.email.Email()
-                if(BRANCH_NAME == 'master') {
-                    email.sendNotification()
-                } else {
-                    email.sendNotification(null, false, null, [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']])
+                if(params.NOTIFY_EMAIL) {
+                    notifyFailed((BRANCH_NAME == "master") ? notifyMaster : notifyBranch)
+                }
+            }
+        }
+        unstable {
+            script {
+                if(params.NOTIFY_EMAIL) {
+                    notifyUnstable((BRANCH_NAME == "master") ? notifyMaster : notifyBranch)
+                }
+            }
+        }
+        fixed {
+            script {
+                if(params.NOTIFY_EMAIL) {
+                    notifyFixed((BRANCH_NAME == "master") ? notifyMaster : notifyBranch)
                 }
             }
         }
     }
 }
-
 

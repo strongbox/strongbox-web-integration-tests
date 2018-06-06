@@ -27,8 +27,8 @@ assert commandOutput.contains(publishSuccessMsg)
 // Resolve dependency via Strongbox and check output for success
 //TODO: uncomment when issue will be done [https://github.com/strongbox/strongbox/issues/602]
 
-//runCommand(executionPath, npmExec + "install")
+runCommand(executionPath, npmExec + "install")
 
-//commandOutput = runCommand(executionPath, npmExec + "ls")
+commandOutput = runCommand(executionPath, npmExec + "ls")
 
-//assert !commandOutput.contains(resolveFailureMsg)
+assert !commandOutput.contains(resolveFailureMsg)

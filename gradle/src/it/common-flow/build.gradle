@@ -17,7 +17,7 @@ configurations {
 }
 
 repositories {
-    maven { url "http://localhost:48080/storages/public/public-group/" }
+    maven { url "http://localhost:48080/storages/public/maven-group/" }
 }
 
 dependencies {

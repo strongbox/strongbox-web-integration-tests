@@ -23,13 +23,8 @@
     <distributionManagement>
         <repository>
             <id>releases-with-valid-user</id>
-            <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/releases/</url>
+            <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/releases-with-redeployment-forbidden/</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshots-with-valid-user</id>
-            <url>http://@strongbox.host@:@port.jetty.listen@/storages/storage0/snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
     </distributionManagement>
 
 </project>

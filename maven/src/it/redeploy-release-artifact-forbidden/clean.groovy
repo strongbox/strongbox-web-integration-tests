@@ -27,7 +27,7 @@ try
     System.out.println("storage = " + storage.toString())
     System.out.println()
 
-    def repositoryId = "releases-with-redeployment"
+    def repositoryId = "releases-with-redeployment-forbidden"
 
     if (storage.getRepository(repositoryId) == null)
     {
@@ -42,7 +42,7 @@ try
         def repository = new MutableRepository(repositoryId)
         repository.setLayout(Maven2LayoutProvider.ALIAS)
         repository.setPolicy(RepositoryPolicyEnum.RELEASE.policy)
-        repository.setAllowsRedeployment(true)
+        repository.setAllowsRedeployment(false)
         repository.setStorage(storage)
 
         client.addRepository(repository)
@@ -59,7 +59,7 @@ try
         System.out.println()
         System.out.println()
         System.out.println("storage0: " + s.toString())
-        System.out.println("releases-with-redeployment: " + r.toString())
+        System.out.println("releases-with-redeployment-forbidden: " + r.toString())
         System.out.println()
         System.out.println()
     }

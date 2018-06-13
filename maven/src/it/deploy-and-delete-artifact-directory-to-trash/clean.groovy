@@ -1,7 +1,7 @@
 import org.carlspring.strongbox.client.ArtifactClient
 import org.carlspring.strongbox.client.RestClient
 import org.carlspring.strongbox.providers.layout.Maven2LayoutProvider
-import org.carlspring.strongbox.storage.repository.Repository
+import org.carlspring.strongbox.storage.repository.MutableRepository
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
 
 def artifactClient = ArtifactClient.testInstance;
@@ -41,7 +41,7 @@ try
         System.out.println()
 
         // Create the test repository:
-        def repository = new Repository(repositoryId)
+        def repository = new MutableRepository(repositoryId)
         repository.setLayout(Maven2LayoutProvider.ALIAS)
         repository.setPolicy(RepositoryPolicyEnum.RELEASE.policy)
         repository.setTrashEnabled(true)

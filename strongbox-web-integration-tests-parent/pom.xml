@@ -77,7 +77,7 @@
 
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${dir.strongbox.home}/etc</outputDirectory>
-                                            <includes>logback.xml</includes>
+                                            <includes>logback-debug.xml</includes>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -129,7 +129,7 @@
 
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${dir.strongbox.home}/etc</outputDirectory>
-                                            <includes>logback.xml</includes>
+                                            <includes>logback-debug.xml</includes>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>${project.groupId}</groupId>
@@ -291,11 +291,11 @@
                                 </systemProperty>
                                 <systemProperty>
                                     <name>logging.config.file</name>
-                                    <value>${dir.strongbox.home}/etc/logback.xml</value>
+                                    <value>${dir.strongbox.home}/etc/logback-debug.xml</value>
                                 </systemProperty>
                                 <systemProperty>
                                     <name>logback.configurationFile</name>
-                                    <value>${dir.strongbox.home}/etc/logback.xml</value>
+                                    <value>${dir.strongbox.home}/etc/logback-debug.xml</value>
                                 </systemProperty>
                                 <systemProperty>
                                     <name>authorization.config.xml</name>

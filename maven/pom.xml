@@ -276,8 +276,8 @@
                                 <strongbox.storage.booter.basedir>${basedir}/target/storages</strongbox.storage.booter.basedir>
                                 <strongbox.host>${strongbox.host}</strongbox.host>
                                 <strongbox.port>${strongbox.port}</strongbox.port>
-                                <logback.configurationFile>${dir.strongbox.home}/etc/logback.xml</logback.configurationFile>
-                                <logging.config.file>${project.build.directory}/strongbox/etc/logback.xml</logging.config.file>
+                                <logback.configurationFile>${dir.strongbox.home}/etc/logback-debug.xml</logback.configurationFile>
+                                <logging.config.file>${project.build.directory}/strongbox/etc/logback-debug.xml</logging.config.file>
                                 <logging.dir>${dir.strongbox.vault}/logs</logging.dir>
                                 <java.io.tmpdir>${dir.strongbox.vault}/tmp</java.io.tmpdir>
                                 <ehcache.disk.store.dir>${dir.strongbox.vault}/cache</ehcache.disk.store.dir>

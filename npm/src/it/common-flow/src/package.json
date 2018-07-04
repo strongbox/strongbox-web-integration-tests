@@ -21,7 +21,7 @@
         "url": "https://github.com/strongbox"
     },
     "dependencies": {
-        "@strongbox/hello-strongbox-npm": "http://localhost:48080/storages/storage-npm/npm-releases/@strongbox/hello-strongbox-npm/1.0.0/hello-strongbox-npm-1.0.0.tgz"
+        "@strongbox/hello-strongbox-npm": "http://localhost:48080/storages/storage-npm/npm-releases/@strongbox/hello-strongbox-npm/-/hello-strongbox-npm-1.0.0.tgz"
     },
     "license": "Apache-2.0"
 }

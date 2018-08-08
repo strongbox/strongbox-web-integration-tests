@@ -1,7 +1,10 @@
 import org.carlspring.strongbox.client.RestClient
+import org.carlspring.strongbox.forms.configuration.RepositoryForm
+import org.carlspring.strongbox.providers.datastore.StorageProviderEnum
 import org.carlspring.strongbox.providers.layout.Maven2LayoutProvider
-import org.carlspring.strongbox.storage.repository.MutableRepository
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
+import org.carlspring.strongbox.storage.repository.RepositoryStatusEnum
+import org.carlspring.strongbox.storage.repository.RepositoryTypeEnum
 
 def client = RestClient.getTestInstanceLoggedInAsAdmin()
 
@@ -39,13 +42,16 @@ try
         System.out.println()
 
         // Create the test repository:
-        def repository = new MutableRepository(repositoryId)
+        def repository = new RepositoryForm()
+        repository.setId(repositoryId)
         repository.setLayout(Maven2LayoutProvider.ALIAS)
         repository.setPolicy(RepositoryPolicyEnum.RELEASE.policy)
         repository.setTrashEnabled(true)
-        repository.setStorage(storage)
+        repository.setImplementation(StorageProviderEnum.FILESYSTEM.description)
+        repository.setType(RepositoryTypeEnum.HOSTED.type)
+        repository.setStatus(RepositoryStatusEnum.IN_SERVICE.status)
 
-        client.addRepository(repository)
+        client.addRepository(repository, storage.getId())
 
         System.out.println()
         System.out.println()

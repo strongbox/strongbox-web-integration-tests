@@ -6,8 +6,8 @@ this.metaClass.mixin baseScript
 println "Test test-npm-common-flow.groovy" + "\n\n"
 
 def npmExec
-def publishSuccessMsg = "+ @strongbox/hello-strongbox-npm@1.0.0"
-def resolveFailureMsg = "npm ERR! missing: @strongbox/hello-strongbox-npm"
+def publishSuccessMsg = "+ @strongbox/npm-transitive-dependency@1.0.0"
+def resolveFailureMsg = "npm ERR! missing: @strongbox/npm-transitive-dependency"
 
 // Determine OS and appropriate commands
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
@@ -16,19 +16,21 @@ if (System.getProperty("os.name").toLowerCase().contains("windows")) {
     npmExec = "npm "
 }
 
-def executionPath = getExecutionPath(project)
+def executionPath = getExecutionPathRoot(project)
 def commandOutput
 
+def transitiveDependencyRoot = executionPath.resolve("npm-transitive-dependency")
+
 // Publish package to Strongbox and check output for success
-commandOutput = runCommand(executionPath, npmExec + "publish")
+commandOutput = runCommand(transitiveDependencyRoot, npmExec + "publish")
 
 assert commandOutput.contains(publishSuccessMsg)
 
+def dependencyTestRoot = executionPath.resolve("npm-dependency-test")
+
 // Resolve dependency via Strongbox and check output for success
-//TODO: uncomment when issue will be done [https://github.com/strongbox/strongbox/issues/602]
+runCommand(dependencyTestRoot, npmExec + "install")
 
-runCommand(executionPath, npmExec + "install")
-
-commandOutput = runCommand(executionPath, npmExec + "ls")
+commandOutput = runCommand(dependencyTestRoot, npmExec + "ls")
 
 assert !commandOutput.contains(resolveFailureMsg)

@@ -1,0 +1,12 @@
+{
+    "name": "@strongbox/npm-transitive-dependency",
+    "version": "1.0.0",
+    "description": "npm-transitive-dependency",
+    "main": "index.js",
+    "author": {
+        "name": "Sergey Bespalov",
+        "email": "serge.bespalov@gmail.com",
+        "url": "https://github.com/strongbox"
+    },
+    "license": "Apache-2.0"
+}

@@ -13,3 +13,5 @@ target
 
 sbt/src/it/**/project
 !sbt/src/it/**/project/plugins.sbt
+
+node_modules

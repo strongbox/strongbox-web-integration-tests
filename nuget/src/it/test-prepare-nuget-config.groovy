@@ -1,7 +1,3 @@
-import groovy.transform.BaseScript
-import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
-import java.nio.file.Paths
-import java.nio.file.Files
 
 def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName( 'BaseNugetWebIntegrationTest.groovy' )

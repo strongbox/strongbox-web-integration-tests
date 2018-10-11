@@ -1,0 +1,8 @@
+version: '3'
+services:
+  strongbox-web-integration-tests-nuget:
+    image: strongboxci/alpine:nuget-3.4-mono
+    volumes:
+      - $HOME/.m2/repository:/home/jenkins/.m2/repository
+      - ./:/workspace
+    command: /bin/bash -c "cd /workspace && mvn clean install"

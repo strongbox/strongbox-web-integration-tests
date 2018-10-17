@@ -4,5 +4,6 @@ services:
     image: strongboxci/alpine:nuget-3.4-mono
     volumes:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
-      - ./:/workspace
-    command: /bin/bash -c "cd /workspace && mvn clean install"
+      - ../:/workspace
+    working_dir: /workspace
+    command: mvn clean install

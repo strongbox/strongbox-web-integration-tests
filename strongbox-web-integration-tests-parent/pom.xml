@@ -44,6 +44,19 @@
         <dir.jetty.etc>${dir.strongbox.home}/etc/jetty</dir.jetty.etc>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-web-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-jetty-booter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <profiles>
         <profile>
             <id>prepare-resources-it</id>
@@ -241,6 +254,7 @@
                     <!-- This plugin needs to be defined first, as the execution 
                         of the Jetty Maven plugin which shuts down Jetty overlaps with this and shuts 
                         it down before the tests are done. -->
+                    <!--
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
@@ -323,8 +337,8 @@
                                 </systemProperty>
                             </systemProperties>
 
-                            <!-- Restore the following for SSL/HTTPSL when 
-                                the time comes: <jettyXml>${dir.jetty.etc}/jetty.xml,${dir.jetty.etc}/jetty-http.xml,${dir.jetty.etc}/jetty-ssl.xml,${dir.jetty.etc}/jetty-https.xml</jettyXml> -->
+                            &lt;!&ndash; Restore the following for SSL/HTTPSL when
+                                the time comes: <jettyXml>${dir.jetty.etc}/jetty.xml,${dir.jetty.etc}/jetty-http.xml,${dir.jetty.etc}/jetty-ssl.xml,${dir.jetty.etc}/jetty-https.xml</jettyXml> &ndash;&gt;
                             <jettyXml>${dir.jetty.etc}/jetty.xml,${dir.jetty.etc}/jetty-http.xml</jettyXml>
                         </configuration>
 
@@ -347,38 +361,42 @@
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>jetty-block</id>
-            <activation>
-                <property>
-                    <name>jetty.block</name>
-                </property>
-            </activation>
+                    -->
 
-            <build>
-                <plugins>
                     <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
 
                         <configuration>
-                            <daemon>false</daemon>
+                            <mainClass>org.carlspring.strongbox.StrongboxSpringBootApplication</mainClass>
+                            <!-- Check every 10 seconds -->
+                            <wait>10000</wait>
+                            <!-- Timeout after 12 * 10 seconds = 2 minutes -->
+                            <maxAttempts>12</maxAttempts>
+
+                            <jvmArguments>-Dstrongbox.home=${dir.strongbox.home} -Dstrongbox.vault=${dir.strongbox.vault}</jvmArguments>
                         </configuration>
 
                         <executions>
                             <execution>
-                                <id>jetty-run</id>
+                                <id>spring-boot-start</id>
 
                                 <phase>pre-integration-test</phase>
                                 <goals>
-                                    <goal>run</goal>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>spring-boot-stop</id>
+
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
+
                 </plugins>
             </build>
         </profile>

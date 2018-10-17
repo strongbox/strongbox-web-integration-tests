@@ -1,0 +1,9 @@
+version: '3'
+services:
+  strongbox-web-integration-tests-npm:
+    image: strongboxci/alpine:jdk8-npm-9.4
+    volumes:
+      - $HOME/.m2/repository:/home/jenkins/.m2/repository
+      - ../:/workspace
+    working_dir: /workspace
+    command: mvn clean install

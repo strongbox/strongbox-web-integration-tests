@@ -1,0 +1,9 @@
+version: '3'
+services:
+  strongbox-web-integration-tests-gradle:
+    image: strongboxci/alpine:jdk8-gradle-4.5
+    volumes:
+      - $HOME/.m2/repository:/home/jenkins/.m2/repository
+      - ../:/workspace
+    working_dir: /workspace
+    command: mvn clean install

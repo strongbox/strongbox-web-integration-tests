@@ -1,9 +1,9 @@
 version: '3'
 services:
   strongbox-web-integration-tests-maven:
-    image: strongboxci/alpine:jdk8-mvn-3.3
+    image: strongboxci/alpine:jdk8-mvn-3.5
     volumes:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
       - ../:/workspace
-    working_dir: /workspace
-    command: mvn clean install
+    working_dir: /workspace/maven
+    command: mvn clean install -U

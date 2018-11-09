@@ -5,5 +5,5 @@ services:
     volumes:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
       - ../:/workspace
-    working_dir: /workspace
-    command: mvn clean install
+    working_dir: /workspace/nuget
+    command: mvn clean install -U

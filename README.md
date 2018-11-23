@@ -20,13 +20,13 @@ you don't have to go through the process of installing all of the by hand.
 For this to work - you need to have installed `docker` and `docker-compose` on your machine. 
 Afterwards, just go to the respective sub-project (i.e. `cd maven`) and execute `docker-compose up`.
 
-#### On windows
+#### On Windows
 
 If you are using windows you need to install all of the [tools](#testing) below and make them available in your `PATH`.
 [Nuget](https://dist.nuget.org/win-x86-commandline/v3.4.4/nuget.exe) requires `.Net Framework v4` and you need to 
 set the `NUGET_V3_EXEC` environment variable with value `c:/path/to/nuget.exe`.
 
-#### On linux
+#### On Linux
 
 If you are using linux you need to install all of the [tools](#testing) below and make them available in your `PATH`.
 To run Nuget tests here you will need `mono` to be installed. 
@@ -37,6 +37,22 @@ There were many problems with the compatibility of `nuget.exe` and `mono` versio
 - `NUGET_V3_EXEC` need to be set with value `mono \path\to\nuget.exe`
 
 <a href="#testing"></a>
+
+#### Using `docker-compose`
+
+You can run all the tests like this:
+
+```
+for tool in `ls -ap | grep \/ | grep -v -e "\."`; do cd ${tool} && docker-compose up & cd -; done
+```
+
+Alternatively, enter the respective tool’s directory one by one and just do:
+```
+docker-compose up
+```
+
+This will automatically build the code after spinning up a Docker container and then switch it off when it's done.
+
 ## Testing
 
 We are using `Maven 3.x` and `jdk 1.8` to execute the tests for the respective tool.

@@ -12,6 +12,12 @@ This project contains various integration tests for the Strongbox project and th
 * NuGet
 * SBT
 
+Each of the modules in the project is built as a Maven project and:
+1. Starts the Strongbox Spring Boot application
+2. Runs the code against the Strongbox Spring Boot application
+
+The code used to start the Spring Boot application is either retrieved from our repository, or, if you've made local modifications, it uses them directly from your local Maven cache.
+
 # Building and Testing
 
 ## Docker

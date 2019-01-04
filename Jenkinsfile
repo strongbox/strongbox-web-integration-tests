@@ -60,7 +60,7 @@ pipeline {
                 stage('Maven') {
                     agent {
                         node {
-                            label "alpine:jdk8-mvn-3.3"
+                            label "alpine:jdk8-mvn-3.5"
                             customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }

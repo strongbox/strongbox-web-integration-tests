@@ -100,7 +100,7 @@ pipeline {
                 stage('NPM') {
                     agent {
                         node {
-                            label "alpine:node-9.4"
+                            label "alpine:node-10"
                             customWorkspace workspace().getUniqueWorkspacePath()
                         }
                     }

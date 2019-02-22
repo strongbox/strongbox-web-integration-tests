@@ -2,6 +2,7 @@ strongbox-web-integration-tests
 ===
 [![Master Build Status](https://dev.carlspring.org/jenkins/buildStatus/icon?job=strongbox/strongbox-web-integration-tests/master)](https://dev.carlspring.org/jenkins/job/strongbox/job/strongbox-web-integration-tests/job/master/)
 [![RocketChat.Community.Channel](https://chat.carlspring.org/images/join-chat.svg)](https://chat.carlspring.org/channel/community)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstrongbox%2Fstrongbox-web-integration-tests.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstrongbox%2Fstrongbox-web-integration-tests?ref=badge_shield)
 
 # Introduction
 
@@ -70,3 +71,7 @@ We are using `Maven 3.x` and `jdk 1.8` to execute the tests for the respective t
 * [SBT 1.1.0](./sbt)
 * [NuGet 3.4.4](./nuget)
 * [NPM](./npm)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstrongbox%2Fstrongbox-web-integration-tests.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstrongbox%2Fstrongbox-web-integration-tests?ref=badge_large)

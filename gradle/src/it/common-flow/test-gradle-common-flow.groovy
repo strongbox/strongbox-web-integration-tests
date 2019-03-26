@@ -31,8 +31,13 @@ runCommand(executionPath, String.format("$gradleExec upload -Dcredentials.userna
                                         password))
 
 // check if artifact was uploaded to Strongbox
+def artifactFilenames = new FileNameByRegexFinder()
+                        .getFileNames(project.build.directory +
+                                      '/strongbox-vault/storages/storage0/snapshots/org/carlspring/strongbox/' +
+                                      'examples/hello-strongbox-gradle/1.0-SNAPSHOT', 'hello-strongbox-gradle-1.0-\\d{8}\\.\\d{6}-\\d\\.jar$')
+assert artifactFilenames.size() == 1
 assert targetPath.resolve('strongbox-vault/storages/storage0/snapshots/org/carlspring/strongbox/' +
                           'examples/hello-strongbox-gradle/1.0-SNAPSHOT')
-                 .resolve('hello-strongbox-gradle-1.0-SNAPSHOT.jar')
+                 .resolve(artifactFilenames[0])
                  .toFile().exists()
 

@@ -1,6 +1,6 @@
 import org.carlspring.strongbox.client.ArtifactClient
 
-def client = ArtifactClient.testInstance;
+def client = ArtifactClient.testInstanceLoggedInAsAdmin;
 
 def path = "/storages/storage0/releases-with-redeployment-forbidden/org/carlspring/maven/test-project/1.0.10/test-project-1.0.10.jar"
 

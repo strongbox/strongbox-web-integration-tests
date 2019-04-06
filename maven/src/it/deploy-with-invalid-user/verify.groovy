@@ -1,7 +1,7 @@
 import org.carlspring.strongbox.client.ArtifactClient
 
 
-def client = ArtifactClient.getTestInstance()
+def client = ArtifactClient.getTestInstanceLoggedInAsAdmin()
 
 System.out.println()
 System.out.println()

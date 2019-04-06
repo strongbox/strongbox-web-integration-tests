@@ -1,6 +1,6 @@
 import org.carlspring.strongbox.client.ArtifactClient
 
-def client = ArtifactClient.testInstance;
+def client = ArtifactClient.testInstanceLoggedInAsAdmin;
 
 client.delete("storage0", "releases","org/carlspring/maven/test-project/1.0.1/test-project-1.0.1.jar");
 

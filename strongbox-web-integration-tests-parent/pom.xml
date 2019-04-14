@@ -121,7 +121,7 @@
 
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/strongbox-authorization.xml</includes>
+                                            <includes>etc/conf/strongbox-authorization.yaml</includes>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -152,7 +152,7 @@
 
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/strongbox.xml</includes>
+                                            <includes>etc/conf/strongbox.yaml</includes>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>${project.groupId}</groupId>
@@ -162,7 +162,7 @@
 
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/security-users.xml</includes>
+                                            <includes>etc/conf/security-users.yaml</includes>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -183,7 +183,7 @@
 
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${dir.strongbox.home}</outputDirectory>
-                                            <includes>etc/conf/security-users.xml</includes>
+                                            <includes>etc/conf/security-users.yaml</includes>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>

@@ -4,7 +4,7 @@ import javax.ws.rs.core.MediaType
 
 return true
 
-def client = ArtifactClient.getTestInstanceLoggedInAsAdmin()
+def client = ArtifactClient.getTestInstance()
 
 System.out.println()
 System.out.println()

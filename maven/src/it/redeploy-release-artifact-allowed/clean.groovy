@@ -6,7 +6,7 @@ import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
 import org.carlspring.strongbox.storage.repository.RepositoryStatusEnum
 import org.carlspring.strongbox.storage.repository.RepositoryTypeEnum
 
-def client = RestClient.getTestInstanceLoggedInAsAdmin()
+def client = RestClient.getTestInstance()
 
 System.out.println()
 System.out.println()

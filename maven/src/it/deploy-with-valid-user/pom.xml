@@ -6,6 +6,7 @@
     <artifactId>test-project</artifactId>
     <version>1.0.6</version>
 
+    <inceptionYear>2019</inceptionYear>
     <dependencies>
         <dependency>
             <groupId>org.carlspring.strongbox</groupId>

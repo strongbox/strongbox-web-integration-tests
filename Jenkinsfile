@@ -247,6 +247,37 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Raw') {
+                    agent {
+                        label 'alpine:jdk8-mvn-3.5'
+                    }
+                    options {
+                        timeout(time: 15, unit: 'MINUTES')
+                        checkoutToSubdirectory "strongbox-web-integration-tests"
+                    }
+                    steps {
+                        script {
+                            runIt('raw', 'mvn', STAGE_NAME.toLowerCase(), MAVEN_OPTS, params.STRONGBOX_BRANCH.equals("master"))
+                        }
+                    }
+                    post {
+                        unsuccessful {
+                            script {
+                                runItArchive('raw')
+                            }
+                        }
+                        always {
+                            // This is necessary, because Jenkins sometimes gets confused what's the CWD!
+                            dir("") {
+                                // Cleanup
+                                script {
+                                    workspace().clean()
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

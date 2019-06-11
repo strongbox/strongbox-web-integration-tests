@@ -1,4 +1,4 @@
-import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
+import org.carlspring.strongbox.artifact.generator.NugetArtifactGenerator
 
 def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName( 'BaseNugetWebIntegrationTest.groovy' )
@@ -14,9 +14,9 @@ def configPath = "$baseDir/NuGet.config"
 def nugetExec = System.getenv("NUGET_V3_EXEC")
 assert nugetExec?.trim() : "\"NUGET_V3_EXEC\" environment variable need to be set"
 
-def nugetPackageGenerator = new NugetPackageGenerator(baseDir);
-nugetPackageGenerator.generateNugetPackage("Org.Carlspring.Swit.Tiwtd.Transitive", "1.0.0");
-nugetPackageGenerator.generateNugetPackage("Org.Carlspring.Swit.Tiwtd", "1.0.0", "Org.Carlspring.Swit.Tiwtd.Transitive:1.0.0");
+def nugetArtifactGenerator = new NugetArtifactGenerator(baseDir);
+nugetArtifactGenerator.generate("Org.Carlspring.Swit.Tiwtd.Transitive", "1.0.0");
+nugetArtifactGenerator.generate("Org.Carlspring.Swit.Tiwtd", "1.0.0", "Org.Carlspring.Swit.Tiwtd.Transitive:1.0.0");
 
 def storageUrl = getStorageUrl()
 

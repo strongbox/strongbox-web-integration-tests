@@ -266,6 +266,12 @@
                             </dependency>
                             <dependency>
                                 <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-storage-api</artifactId>
+                                <version>${project.version}</version>
+                                <classifier>tests</classifier>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
                                 <artifactId>strongbox-storage-nuget-layout-provider</artifactId>
                                 <version>${project.version}</version>
                             </dependency>

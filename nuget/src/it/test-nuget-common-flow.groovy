@@ -1,4 +1,4 @@
-import org.carlspring.strongbox.artifact.generator.NugetPackageGenerator
+import org.carlspring.strongbox.artifact.generator.NugetArtifactGenerator
 
 def baseScript = new GroovyScriptEngine( "$project.basedir/src/it" ).with {
     loadScriptByName( 'BaseNugetWebIntegrationTest.groovy' )
@@ -18,8 +18,8 @@ def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono"
 def packageVersion = "1.0.0"
 def packageFileName = packageId + "." + packageVersion + ".nupkg";
 
-def nugetPackageGenerator = new NugetPackageGenerator(baseDir);
-nugetPackageGenerator.generateNugetPackage(packageId, packageVersion);
+def nugetArtifactGenerator = new NugetArtifactGenerator(baseDir);
+nugetArtifactGenerator.generate(packageId, packageVersion);
 
 def storageUrl = getStorageUrl()
 

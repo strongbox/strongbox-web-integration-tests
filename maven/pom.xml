@@ -93,11 +93,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.carlspring.maven</groupId>
-            <artifactId>maven-commons</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-artifact</artifactId>
         </dependency>
@@ -309,12 +304,6 @@
                                 <groupId>com.fasterxml.jackson.jaxrs</groupId>
                                 <artifactId>jackson-jaxrs-json-provider</artifactId>
                                 <version>${version.jackson}</version>
-                            </dependency>
-
-                            <dependency>
-                                <groupId>org.carlspring.maven</groupId>
-                                <artifactId>maven-commons</artifactId>
-                                <version>${version.carlspring.maven.commons}</version>
                             </dependency>
 
                             <dependency>

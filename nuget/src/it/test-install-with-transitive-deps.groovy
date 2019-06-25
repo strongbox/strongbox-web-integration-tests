@@ -14,9 +14,11 @@ def configPath = "$baseDir/NuGet.config"
 def nugetExec = System.getenv("NUGET_V3_EXEC")
 assert nugetExec?.trim() : "\"NUGET_V3_EXEC\" environment variable need to be set"
 
-def nugetArtifactGenerator = new NugetArtifactGenerator(baseDir);
-nugetArtifactGenerator.generate("Org.Carlspring.Swit.Tiwtd.Transitive", "1.0.0");
-nugetArtifactGenerator.generate("Org.Carlspring.Swit.Tiwtd", "1.0.0", "Org.Carlspring.Swit.Tiwtd.Transitive:1.0.0");
+def packageExtension = "nupkg"
+
+def nugetArtifactGenerator = new NugetArtifactGenerator(baseDir)
+nugetArtifactGenerator.generate("Org.Carlspring.Swit.Tiwtd.Transitive", "1.0.0", packageExtension)
+nugetArtifactGenerator.generate("Org.Carlspring.Swit.Tiwtd", "1.0.0", packageExtension, "Org.Carlspring.Swit.Tiwtd.Transitive:1.0.0")
 
 def storageUrl = getStorageUrl()
 

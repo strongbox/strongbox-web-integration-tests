@@ -16,10 +16,11 @@ assert nugetExec?.trim() : "\"NUGET_V3_EXEC\" environment variable need to be se
 
 def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono" 
 def packageVersion = "1.0.0"
-def packageFileName = packageId + "." + packageVersion + ".nupkg";
+def packageExtension = "nupkg"
+def packageFileName = packageId + "." + packageVersion + "." + packageExtension
 
 def nugetArtifactGenerator = new NugetArtifactGenerator(baseDir);
-nugetArtifactGenerator.generate(packageId, packageVersion);
+nugetArtifactGenerator.generate(packageId, packageVersion, packageExtension)
 
 def storageUrl = getStorageUrl()
 

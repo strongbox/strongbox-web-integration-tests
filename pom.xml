@@ -44,6 +44,7 @@
         <module>nuget</module>
         <module>gradle</module>
         <module>npm</module>
+        <module>raw</module>
     </modules>
     
 </project>

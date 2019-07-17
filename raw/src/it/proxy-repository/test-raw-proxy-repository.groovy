@@ -1,5 +1,7 @@
-import org.carlspring.maven.commons.util.ChecksumUtils
 import org.carlspring.strongbox.client.RestClient
+import org.carlspring.strongbox.util.MessageDigestUtils
+
+import java.nio.file.Paths
 
 // Create a raw, proxy (remote) repo to https://services.gradle.org/distributions/
 // Then download a gradle zip, and the shasum
@@ -66,7 +68,7 @@ File artifactShaSum = downloadArtifact(addressShaSum)
 downloadedChecksum = artifactShaSum.getText('UTF-8')
 
 File artifact = downloadArtifact(address)
-calculatedChecksum = ChecksumUtils.getChecksum(artifact, 'SHA-256')
+calculatedChecksum = MessageDigestUtils.calculateChecksum(Paths.get(artifact.toString()), 'SHA-256')
 
 println()
 println("Downloaded sha256sum is " + downloadedChecksum)

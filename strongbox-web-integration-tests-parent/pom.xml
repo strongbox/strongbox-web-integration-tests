@@ -42,6 +42,9 @@
         <dir.strongbox.home>${project.build.directory}/strongbox</dir.strongbox.home>
         <dir.strongbox.vault>${project.build.directory}/strongbox-vault</dir.strongbox.vault>
         <dir.jetty.etc>${dir.strongbox.home}/etc/jetty</dir.jetty.etc>
+        <logging.debug>${env.STRONGBOX_DEBUG}</logging.debug>
+        <logging.console.enabled>${env.STRONGBOX_LOG_CONSOLE_ENABLED}</logging.console.enabled>
+        <logging.file.enabled>${env.STRONGBOX_LOG_FILE_ENABLED}</logging.file.enabled>
     </properties>
 
     <dependencies>
@@ -58,6 +61,39 @@
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>env.STRONGBOX_DEBUG</id>
+            <activation>
+                <property>
+                    <name>!env.STRONGBOX_DEBUG</name>
+                </property>
+            </activation>
+            <properties>
+                <env.STRONGBOX_DEBUG>false</env.STRONGBOX_DEBUG>
+            </properties>
+        </profile>
+        <profile>
+            <id>env.STRONGBOX_LOG_CONSOLE_ENABLED</id>
+            <activation>
+                <property>
+                    <name>!env.STRONGBOX_LOG_CONSOLE_ENABLED</name>
+                </property>
+            </activation>
+            <properties>
+                <env.STRONGBOX_LOG_CONSOLE_ENABLED>true</env.STRONGBOX_LOG_CONSOLE_ENABLED>
+            </properties>
+        </profile>
+        <profile>
+            <id>env.STRONGBOX_LOG_FILE_ENABLED</id>
+            <activation>
+                <property>
+                    <name>!env.STRONGBOX_LOG_FILE_ENABLED</name>
+                </property>
+            </activation>
+            <properties>
+                <env.STRONGBOX_LOG_FILE_ENABLED>false</env.STRONGBOX_LOG_FILE_ENABLED>
+            </properties>
+        </profile>
         <profile>
             <id>prepare-resources-it</id>
             <activation>
@@ -244,7 +280,14 @@
                             <!-- Timeout after 12 * 10 seconds = 2 minutes -->
                             <maxAttempts>12</maxAttempts>
 
-                            <jvmArguments>-Dstrongbox.home=${dir.strongbox.home} -Dstrongbox.vault=${dir.strongbox.vault} -Dstrongbox.orientdb.profile=orientdb_MEMORY</jvmArguments>
+                            <jvmArguments>
+                              -Dstrongbox.home=${dir.strongbox.home}
+                              -Dstrongbox.vault=${dir.strongbox.vault}
+                              -Dstrongbox.orientdb.profile=orientdb_MEMORY
+                              -Dlogging.debug=${logging.debug}
+                              -Dlogging.console.enabled=${logging.console.enabled}
+                              -Dlogging.file.enabled=${logging.file.enabled}
+                            </jvmArguments>
                         </configuration>
 
                         <executions>

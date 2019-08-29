@@ -1,6 +1,6 @@
 strongbox-web-integration-tests
 ===
-[![Master Build Status](https://dev.carlspring.org/jenkins/buildStatus/icon?job=strongbox/strongbox-web-integration-tests/master)](https://dev.carlspring.org/jenkins/job/strongbox/job/strongbox-web-integration-tests/job/master/)
+[![Master Build Status](https://jenkins.carlspring.org/buildStatus/icon?job=strongbox%2Fbuilds%2Fstrongbox-web-integration-tests%2Fmaster)](https://jenkins.carlspring.org/job/strongbox/job/builds/job/strongbox-web-integration-tests/job/master/)
 [![RocketChat.Community.Channel](https://chat.carlspring.org/images/join-chat.svg)](https://chat.carlspring.org/channel/community)
 
 # Introduction

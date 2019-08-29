@@ -287,6 +287,9 @@
                               -Dlogging.debug=${logging.debug}
                               -Dlogging.console.enabled=${logging.console.enabled}
                               -Dlogging.file.enabled=${logging.file.enabled}
+                              -Dstrongbox.nuget.download.feed=false
+                              -Dstrongbox.download.indexes=false
+                              -Dstrongbox.npm.remote.changes.enabled=false
                             </jvmArguments>
                         </configuration>
 

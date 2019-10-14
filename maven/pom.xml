@@ -245,7 +245,7 @@
 
                             <pomExcludes>
                                 <exclude>deploy-with-invalid-user*/pom.xml</exclude>
-                                <exclude>deploy-large-file/pom.xml</exclude>
+                                <!-- <exclude>deploy-large-file/pom.xml</exclude> -->
                             </pomExcludes>
 
                             <properties>

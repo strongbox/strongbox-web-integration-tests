@@ -8,7 +8,7 @@ println "Test test-npm-add-user-flow.groovy" + "\n\n"
 
 def npmExec
 def strongboxUsername = "admin"
-def nonStrongboxUsername = "noarealuser"
+def nonStrongboxUsername = "notarealuser"
 def successMsg = "logged in as "
 
 // Determine OS and appropriate commands
@@ -22,20 +22,20 @@ else
 }
 
 def executionPath = getExecutionPathRoot(project)
-def transitiveDependencyRoot = executionPath.resolve("npm-add-user-test")
+def adduserDependencyRoot = executionPath.resolve("npm-add-user-test")
 
 def strongboxUser = new Credentials(strongboxUsername,"password","a@a.com")
 def nonStrongboxUser = new Credentials(nonStrongboxUsername,"zipZapZooey","derp@derpy.com")
 
 //test that npm adduser works for strongbox user
-def proc = createNpmAdduserProcess(npmExec, transitiveDependencyRoot.toString())
-assert loginToNpm(proc,strongboxUser, proc.getInputStream(), successMsg+strongboxUsername)
+def proc = createNpmAdduserProcess(npmExec, adduserDependencyRoot.toString())
+assert loginToNpm(proc, strongboxUser, successMsg+strongboxUsername)
 
 proc.destroy()
 
 //test that npm adduser does not work for nonstrongbox user
-proc = createNpmAdduserProcess(npmExec, transitiveDependencyRoot.toString())
-assert !loginToNpm(proc, nonStrongboxUser, proc.getInputStream(), successMsg+nonStrongboxUsername)
+proc = createNpmAdduserProcess(npmExec, adduserDependencyRoot.toString())
+assert !loginToNpm(proc, nonStrongboxUser, successMsg+nonStrongboxUsername)
 
 proc.destroy()
 
@@ -46,10 +46,11 @@ Process createNpmAdduserProcess(String npmExec, String directory)
     return processBuilder.start()
 }
 
-boolean loginToNpm(Process proc, Credentials creds, InputStream inputStream, String returnMessage)
+boolean loginToNpm(Process proc, Credentials creds, String returnMessage)
 {
     def output = new StringBuilder()
-    def outputThread = new Thread(new In(inputStream, output))
+    def promptReader = new PromptReader(proc.getInputStream(), output)
+    def outputThread = new Thread(promptReader)
     def input = new OutputStreamWriter(proc.getOutputStream())
 
     outputThread.start()
@@ -101,12 +102,12 @@ class Credentials
     }
 }
 
-class In implements Runnable 
+class PromptReader implements Runnable
 {
     InputStream is
     StringBuilder sb
 
-    In(InputStream is, StringBuilder sb)
+    PromptReader(InputStream is, StringBuilder sb)
     {
         this.is = is
         this.sb = sb

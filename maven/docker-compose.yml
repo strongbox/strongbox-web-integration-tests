@@ -1,7 +1,7 @@
 version: '3'
 services:
   strongbox-web-integration-tests-maven:
-    image: strongboxci/alpine:jdk8-mvn-3.5
+    image: strongboxci/alpine:jdk8-mvn3.6
     volumes:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
       - ../:/workspace

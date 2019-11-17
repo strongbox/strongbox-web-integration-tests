@@ -42,6 +42,9 @@ proc.destroy()
 
 Process createNpmAdduserProcess(String npmExec, String directory)
 {
+    println "Execute command[s]: "
+    println "npm adduser\n"
+
     def processBuilder = new ProcessBuilder(npmExec, "adduser")
     processBuilder.directory(new File(directory))
     return processBuilder.start()
@@ -116,10 +119,8 @@ class NpmPromptHandler extends Thread
     @Override
     void run()
     {
-
         synchronized (this)
         {
-
             byte[] inputBuffer = new byte[1024]
 
             try
@@ -127,20 +128,23 @@ class NpmPromptHandler extends Thread
                 while (input.read(inputBuffer) != -1)
                 {
                     def token = new String(inputBuffer)
-                    println token
+                    print token
 
                     if (token.toLowerCase().contains("username:"))
                     {
+                        println creds.getUsername()
                         output.write(creds.getUsername() + "\n")
                         output.flush()
                     }
                     else if (token.toLowerCase().contains("password:"))
                     {
+                        println creds.getPassword()
                         output.write(creds.getPassword() + "\n")
                         output.flush()
                     }
                     else if (token.toLowerCase().contains("email:"))
                     {
+                        println creds.getEmail()
                         output.write(creds.getEmail() + "\n")
                         output.flush()
                         output.close()

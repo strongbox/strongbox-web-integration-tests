@@ -242,7 +242,8 @@
                         </executions>
                         <configuration>
                             <scripts>
-                                <script>file:///${basedir}/src/it/common-flow/test-npm-common-flow.groovy</script>
+                              <script>file:///${basedir}/src/it/common-flow/test-npm-common-flow.groovy</script>
+                              <script>file:///${basedir}/src/it/common-flow/test-npm-add-user-flow.groovy</script>
                             </scripts>
                         </configuration>
                         <dependencies>

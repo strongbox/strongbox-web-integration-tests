@@ -121,13 +121,14 @@ class NpmPromptHandler extends Thread
     {
         synchronized (this)
         {
-            byte[] inputBuffer = new byte[1024]
-
             try
             {
-                while (input.read(inputBuffer) != -1)
+                def buffer = new byte[1024]
+                def size = 0
+
+                while ((size = input.read(buffer)) != -1)
                 {
-                    def token = new String(inputBuffer)
+                    def token = new String(buffer, 0, size)
                     print token
 
                     if (token.toLowerCase().contains("username:"))

@@ -48,29 +48,20 @@ Process createNpmAdduserProcess(String npmExec, String directory)
 
 boolean loginToNpm(Process proc, Credentials creds, String returnMessage)
 {
-    def output = new StringBuilder()
-    def promptReader = new PromptReader(proc.getInputStream(), output)
-    def outputThread = new Thread(promptReader)
-    def input = new OutputStreamWriter(proc.getOutputStream())
+    def npmPromptHandler = new NpmPromptHandler(proc.getInputStream(), proc.getOutputStream(), creds)
 
-    outputThread.start()
+    npmPromptHandler.start()
 
-    Thread.sleep(1000)
-    input.write(creds.getUsername() + "\n")
-    input.flush()
+    synchronized (npmPromptHandler)
+    {
+        npmPromptHandler.wait()
+    }
 
-    Thread.sleep(1000)
-    input.write(creds.getPassword() + "\n")
-    input.flush()
-
-    Thread.sleep(1000)
-    input.write(creds.getEmail() + "\n")
-    input.flush()
-
-    Thread.sleep(1000)
-    input.close()
-    
-    return output.toString().toLowerCase().contains(returnMessage)
+    return npmPromptHandler
+           .getReturnMessage()
+           .toString()
+           .toLowerCase()
+           .contains(returnMessage)
 }
 
 class Credentials
@@ -102,34 +93,58 @@ class Credentials
     }
 }
 
-class PromptReader implements Runnable
+class NpmPromptHandler extends Thread
 {
-    InputStream is
-    StringBuilder sb
+    InputStream input
+    OutputStreamWriter output
+    Credentials creds
+    StringBuilder returnMessage
 
-    PromptReader(InputStream is, StringBuilder sb)
+    NpmPromptHandler(InputStream input, OutputStream output, Credentials creds)
     {
-        this.is = is
-        this.sb = sb
+        this.input = input
+        this.output = new OutputStreamWriter(output)
+        this.creds = creds
+        returnMessage = new StringBuilder()
+    }
+
+    String getReturnMessage()
+    {
+        return returnMessage
     }
 
     @Override
-    void run()
-    {
-        byte[] b = new byte[1024]
-        int size = 0
-        try
-        {
-            while ((size = is.read(b)) != -1)
-            {
-                println new String(b)
-                sb.append(new String(b))
+    void run() {
+
+        synchronized (this) {
+
+            byte[] inputBuffer = new byte[1024]
+
+            try {
+                while (input.read(inputBuffer) != -1) {
+                    def token = new String(inputBuffer)
+                    println token
+
+                    if (token.toLowerCase().contains("username:")) {
+                        output.write(creds.getUsername() + "\n")
+                        output.flush()
+                    } else if (token.toLowerCase().contains("password:")) {
+                        output.write(creds.getPassword() + "\n")
+                        output.flush()
+                    } else if (token.toLowerCase().contains("email:")) {
+                        output.write(creds.getEmail() + "\n")
+                        output.flush()
+                        output.close()
+                    } else {
+                        returnMessage.append(token)
+                    }
+                }
+                input.close()
+                notify()
             }
-            is.close()
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace()
+            catch (IOException e) {
+                e.printStackTrace()
+            }
         }
     }
 }

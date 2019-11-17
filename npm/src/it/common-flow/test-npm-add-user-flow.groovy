@@ -2,6 +2,7 @@ def baseScript = new GroovyScriptEngine("$project.basedir/src/it").with
 {
     loadScriptByName('NpmIntegrationTest.groovy')
 }
+
 this.metaClass.mixin baseScript
 
 println "Test test-npm-add-user-flow.groovy" + "\n\n"
@@ -57,11 +58,10 @@ boolean loginToNpm(Process proc, Credentials creds, String returnMessage)
         npmPromptHandler.wait()
     }
 
-    return npmPromptHandler
-           .getReturnMessage()
-           .toString()
-           .toLowerCase()
-           .contains(returnMessage)
+    return npmPromptHandler.getReturnMessage()
+                           .toString()
+                           .toLowerCase()
+                           .contains(returnMessage)
 }
 
 class Credentials
@@ -114,38 +114,49 @@ class NpmPromptHandler extends Thread
     }
 
     @Override
-    void run() {
+    void run()
+    {
 
-        synchronized (this) {
+        synchronized (this)
+        {
 
             byte[] inputBuffer = new byte[1024]
 
-            try {
-                while (input.read(inputBuffer) != -1) {
+            try
+            {
+                while (input.read(inputBuffer) != -1)
+                {
                     def token = new String(inputBuffer)
                     println token
 
-                    if (token.toLowerCase().contains("username:")) {
+                    if (token.toLowerCase().contains("username:"))
+                    {
                         output.write(creds.getUsername() + "\n")
                         output.flush()
-                    } else if (token.toLowerCase().contains("password:")) {
+                    }
+                    else if (token.toLowerCase().contains("password:"))
+                    {
                         output.write(creds.getPassword() + "\n")
                         output.flush()
-                    } else if (token.toLowerCase().contains("email:")) {
+                    }
+                    else if (token.toLowerCase().contains("email:"))
+                    {
                         output.write(creds.getEmail() + "\n")
                         output.flush()
                         output.close()
-                    } else {
+                    }
+                    else
+                    {
                         returnMessage.append(token)
                     }
                 }
                 input.close()
                 notify()
             }
-            catch (IOException e) {
+            catch (IOException e)
+            {
                 e.printStackTrace()
             }
         }
     }
 }
-

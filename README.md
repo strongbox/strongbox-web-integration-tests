@@ -44,6 +44,22 @@ docker-compose up
 
 This will automatically build the code after spinning up a Docker container and then switch it off when it's done.
 
+`docker-compose.yml` may require some changes if it launches on Windows:
+
+```yaml
+version: '3.6'
+services:
+  strongbox-web-integration-tests-npm:
+    environment:
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
+    image: strongboxci/alpine:jdk8-mvn3.6-node12
+    volumes:
+      - C:/Users/mpoznyak/.m2/repository:/home/jenkins/.m2/repository
+      - C:/Users/mpoznyak/Documents/personal_projects/strongbox-web-integration-tests:/workspace
+    working_dir: /workspace/npm
+    command: mvn clean install -U
+```
+
 ## On Windows
 
 If you are using windows you need to install all of the [tools](#testing) below and make them available in your `PATH`.

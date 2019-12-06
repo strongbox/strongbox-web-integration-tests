@@ -1,0 +1,12 @@
+{
+    "name": "@strongbox/unpublish-test",
+    "version": "1.0.0",
+    "description": "unpublish-test",
+    "main": "index.js",
+    "author": {
+        "name": "Maxim Poznyak",
+        "email": "mmp@gmail.com",
+        "url": "https://github.com/strongbox"
+    },
+    "license": "Apache-2.0"
+}

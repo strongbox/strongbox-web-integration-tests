@@ -36,7 +36,7 @@
         <url>https://github.com/strongbox/strongbox-web-integration-tests/tree/${project.scm.tag}</url>
         <tag>master</tag>
     </scm>
-    
+
     <modules>
         <module>strongbox-web-integration-tests-parent</module>
         <module>maven</module>
@@ -45,6 +45,7 @@
         <module>gradle</module>
         <module>npm</module>
         <module>raw</module>
+        <module>pypi</module>
     </modules>
-    
+
 </project>

@@ -18,7 +18,7 @@ class PypiIntegrationTest
 
         def path = targetPath.toFile()
 
-        print "Executing command[s]: "
+        print "Executing command[s]: ---> "
         if (strList instanceof List)
         {
             strList.each { println "${it} " }

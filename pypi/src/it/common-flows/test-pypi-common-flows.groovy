@@ -15,6 +15,7 @@ println "Executing test-pypi-common-flows.groovy"
 def pipInstallPackageCommand
 def packageUploadCommand
 def packageBuildCommand
+def pipDownloadPackageCommand
 
 //TODO :: Check why --config-file not picking .pypirc file
 def repositoryUrl = "http://localhost:48080/storages/storage-pypi/pypi-releases"
@@ -24,10 +25,12 @@ def password = "password"
 // Determine OS and appropriate commands
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
     pipInstallPackageCommand = "cmd /c pip3 install --extra-index-url " + repositoryUrl
+    pipDownloadPackageCommand = "cmd /c pip3 download --extra-index-url " + repositoryUrl
     packageUploadCommand = "cmd /c python3 -m twine upload --repository-url " + repositoryUrl + " --username " + username + " --password " + password+ " dist/*"
     packageBuildCommand = "cmd /c python3 setup.py sdist bdist_wheel"
 } else {
     pipInstallPackageCommand = "pip3 install --extra-index-url " + repositoryUrl
+    pipDownloadPackageCommand="pip3 install --extra-index-url " + repositoryUrl
     packageUploadCommand = "python3 -m twine upload --repository-url " + repositoryUrl + " --username " + username + " --password " + password+ " dist/*"
     packageBuildCommand = "python3 setup.py sdist bdist_wheel"
 }
@@ -71,7 +74,7 @@ runCommand(uploadPackageWithDependencyDirectoryPath, packageBuildCommand)
 Path packageWithDependencyDirectoryPath = uploadPackageWithDependencyDirectoryPath.resolve("dist");
 boolean pathForDependencyPackageExists =
         Files.isDirectory(packageWithDependencyDirectoryPath,
-                LinkOption.NOFOLLOW_LINKS);
+        LinkOption.NOFOLLOW_LINKS);
 
 assert pathForDependencyPackageExists == true
 
@@ -79,7 +82,7 @@ assert pathForDependencyPackageExists == true
 Path dependentPackageDirectoryPath = uploadDependentPackageDirectoryPath.resolve("dist");
 boolean pathForDependentPackageExists =
         Files.isDirectory(dependentPackageDirectoryPath,
-                LinkOption.NOFOLLOW_LINKS);
+        LinkOption.NOFOLLOW_LINKS);
 
 assert pathForDependentPackageExists == true
 
@@ -90,8 +93,19 @@ runCommand(uploadDependentPackageDirectoryPath, packageUploadCommand)
 runCommand(uploadPackageWithDependencyDirectoryPath, packageUploadCommand)
 
 // Install uploaded python package with dependency using pip command and assert success
-def uploadedPackageWithDependencyName = "pip_dependency_upload_test"
-commandOutput = runCommand(uploadPackageWithDependencyDirectoryPath, pipInstallPackageCommand + " " + uploadedPackageWithDependencyName)
-assert commandOutput.contains("Successfully installed " + uploadedPackageWithDependencyName.replace("_" , "-") + "-1.0" + " pip-dependent-package-upload-test-1.0")
+def uploadedPackageWithDependency = "pip_package_with_dependency"
+def uploadedDepdendentPackage = "pip-dependent-package"
+commandOutput = runCommand(uploadPackageWithDependencyDirectoryPath, pipInstallPackageCommand + " " + uploadedPackageWithDependency)
+assert commandOutput.contains("Successfully installed ")
+
+// Uninstall installed packages to execute pip download command
+runCommand(executionBasePath, "pip3 uninstall --yes " + uploadedPackageName)
+runCommand(executionBasePath, "pip3 uninstall --yes " + uploadedPackageWithDependency)
+runCommand(executionBasePath, "pip3 uninstall --yes " + uploadedDepdendentPackage)
+
+
+// execute pip download commands
+runCommand(executionBasePath, pipDownloadPackageCommand + " pip-upload-test")
+runCommand(executionBasePath, pipDownloadPackageCommand + " pip-package-with-dependency")
 
 println "Pypi Integration Test completed.!!"

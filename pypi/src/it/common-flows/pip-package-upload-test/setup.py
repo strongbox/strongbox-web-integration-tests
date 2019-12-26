@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pip_upload_test",
-    packages = ['pip_upload_test'],
+    packages=['pip_upload_test'],
     license='Apache 2.0',
     version="1.0",
     author="Ankit Tomar",
@@ -14,7 +14,7 @@ setup(
     long_description="This is long description",
     long_description_content_type="text/markdown",
     url="https://github.com/anki2189/strongbox-examples",
-    keywords = ['Hello', 'world', 'pypi'],
+    keywords=['Hello', 'world', 'pypi'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

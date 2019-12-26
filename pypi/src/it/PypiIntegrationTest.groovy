@@ -4,9 +4,9 @@ import org.apache.commons.io.FileUtils
 class PypiIntegrationTest
 {
 
-    def getBaseExecutionPath(project)
+    def getExecutionBasePath(project)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve('src').resolve('it')
+        return Paths.get(System.getProperty("user.dir")).resolve('src').resolve('it').resolve('common-flows')
     }
 
     def runCommand(targetPath, strList)

@@ -290,6 +290,7 @@
                               -Dstrongbox.nuget.download.feed=false
                               -Dstrongbox.download.indexes=false
                               -Dstrongbox.npm.remote.changes.enabled=false
+                              -Dspring.servlet.multipart.enabled=true
                             </jvmArguments>
                         </configuration>
 

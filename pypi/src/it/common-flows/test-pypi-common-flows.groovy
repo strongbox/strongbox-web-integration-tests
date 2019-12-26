@@ -49,8 +49,25 @@ boolean pathExists =
 
 assert pathExists == true
 
-// upload python package using pip command and assert sucesss
+// upload python package using pip command
 runCommand(uploadPackageDirectoryPath, packageUploadCommand)
 
+
+// Resolve path for package with dependency build/upload using pip
+def uploadPackageWithDependencyDirectoryPath = executionBasePath.resolve("pip-package-with-dependency-upload-test")
+
+// Build package with dependency to be uploaded
+runCommand(uploadPackageWithDependencyDirectoryPath, packageBuildCommand)
+
+// Assert directory with package with dependency created
+Path packageWithDependencyDirectoryPath = uploadPackageWithDependencyDirectoryPath.resolve("dist");
+boolean pathForDependencyPackageExists =
+        Files.isDirectory(packageWithDependencyDirectoryPath,
+                LinkOption.NOFOLLOW_LINKS);
+
+assert pathForDependencyPackageExists == true
+
+// upload python package with dependency using pip command
+runCommand(uploadPackageDirectoryPath, packageUploadCommand)
 
 println "Pypi Integration Test completed.!!"

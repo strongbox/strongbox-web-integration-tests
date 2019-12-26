@@ -9,7 +9,7 @@ setup(
     license='Apache 2.0',
     version="1.0",
     author="Ankit Tomar",
-    author_email="ankit.tomar@strongbox.com",
+    author_email="ankit.tomar@localhost",
     description="Test upload package",
     long_description="This is long description",
     long_description_content_type="text/markdown",

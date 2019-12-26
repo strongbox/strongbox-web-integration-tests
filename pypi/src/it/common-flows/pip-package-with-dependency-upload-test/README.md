@@ -1,1 +1,1 @@
-This is an integration test to test the Strongbox artifact repository manager with pip to upload/install/download artifact.                                         
+This is an integration test for `pip` which covers upload/install/download artifacts to/from the Strongbox artifact repository manager.

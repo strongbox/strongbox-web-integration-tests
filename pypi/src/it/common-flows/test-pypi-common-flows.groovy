@@ -12,7 +12,7 @@ this.metaClass.mixin baseScript
 println "Pypi Integration Test started...."
 println "Executing test-pypi-common-flows.groovy"
 
-def pipCommandPrefix
+def pipInstallPackageCommand
 def packageUploadCommand
 def packageBuildCommand
 
@@ -23,11 +23,11 @@ def password = "password"
 
 // Determine OS and appropriate commands
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-    pipCommandPrefix = "cmd /c pip3"
+    pipInstallPackageCommand = "cmd /c pip3 install --extra-index-url " + repositoryUrl
     packageUploadCommand = "cmd /c python3 -m twine upload --repository-url " + repositoryUrl + " --username " + username + " --password " + password+ " dist/*"
     packageBuildCommand = "cmd /c python3 setup.py sdist bdist_wheel"
 } else {
-    pipCommandPrefix = "pip3"
+    pipInstallPackageCommand = "pip3 install --extra-index-url " + repositoryUrl
     packageUploadCommand = "python3 -m twine upload --repository-url " + repositoryUrl + " --username " + username + " --password " + password+ " dist/*"
     packageBuildCommand = "python3 setup.py sdist bdist_wheel"
 }
@@ -41,7 +41,7 @@ def uploadPackageDirectoryPath = executionBasePath.resolve("pip-package-upload-t
 // Build package to be uploaded
 runCommand(uploadPackageDirectoryPath, packageBuildCommand)
 
-// Assert directory with package created
+// Assert directory exists for package uploaded
 Path packageDirectoryPath = uploadPackageDirectoryPath.resolve("dist");
 boolean pathExists =
         Files.isDirectory(packageDirectoryPath,
@@ -52,14 +52,22 @@ assert pathExists == true
 // upload python package using pip command
 runCommand(uploadPackageDirectoryPath, packageUploadCommand)
 
+def commandOutput
+// Install uploaded python package using pip command and assert success
+def uploadedPackageName = "pip_upload_test"
+commandOutput = runCommand(uploadPackageDirectoryPath, pipInstallPackageCommand + " " + uploadedPackageName)
+assert commandOutput.contains("Successfully installed " + uploadedPackageName.replace("_" , "-") + "-1.0")
 
-// Resolve path for package with dependency build/upload using pip
+// Resolve path for packages with dependency build/upload using pip
 def uploadPackageWithDependencyDirectoryPath = executionBasePath.resolve("pip-package-with-dependency-upload-test")
+def uploadDependentPackageDirectoryPath = executionBasePath.resolve("pip-dependent-package-upload-test")
 
+// Build dependent package to be uploaded
+runCommand(uploadDependentPackageDirectoryPath, packageBuildCommand)
 // Build package with dependency to be uploaded
 runCommand(uploadPackageWithDependencyDirectoryPath, packageBuildCommand)
 
-// Assert directory with package with dependency created
+// Assert directory for package with dependency created
 Path packageWithDependencyDirectoryPath = uploadPackageWithDependencyDirectoryPath.resolve("dist");
 boolean pathForDependencyPackageExists =
         Files.isDirectory(packageWithDependencyDirectoryPath,
@@ -67,7 +75,23 @@ boolean pathForDependencyPackageExists =
 
 assert pathForDependencyPackageExists == true
 
+// Assert directory for dependent package created
+Path dependentPackageDirectoryPath = uploadDependentPackageDirectoryPath.resolve("dist");
+boolean pathForDependentPackageExists =
+        Files.isDirectory(dependentPackageDirectoryPath,
+                LinkOption.NOFOLLOW_LINKS);
+
+assert pathForDependentPackageExists == true
+
+
+// upload dependent python package using pip command
+runCommand(uploadDependentPackageDirectoryPath, packageUploadCommand)
 // upload python package with dependency using pip command
-runCommand(uploadPackageDirectoryPath, packageUploadCommand)
+runCommand(uploadPackageWithDependencyDirectoryPath, packageUploadCommand)
+
+// Install uploaded python package with dependency using pip command and assert success
+def uploadedPackageWithDependencyName = "pip_dependency_upload_test"
+commandOutput = runCommand(uploadPackageWithDependencyDirectoryPath, pipInstallPackageCommand + " " + uploadedPackageWithDependencyName)
+assert commandOutput.contains("Successfully installed " + uploadedPackageWithDependencyName.replace("_" , "-") + "-1.0" + " pip-dependent-package-upload-test-1.0")
 
 println "Pypi Integration Test completed.!!"

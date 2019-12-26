@@ -7,7 +7,7 @@ setup(
     name="pip_dependency_upload_test",
     packages = ['pip_dependency_upload_test'],
     license='Apache 2.0',
-    version="1.9",
+    version="1.0",
     author="Ankit Tomar",
     author_email="ankit.tomar@strongbox.com",
     description="Test upload package",
@@ -27,6 +27,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=[
-        'pip_upload_test',
+        'pip_dependent_package_upload_test',
     ],
 )

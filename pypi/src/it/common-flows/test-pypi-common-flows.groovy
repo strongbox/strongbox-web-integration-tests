@@ -30,7 +30,7 @@ if (System.getProperty("os.name").toLowerCase().contains("windows")) {
     packageBuildCommand = "cmd /c python3 setup.py sdist bdist_wheel"
 } else {
     pipInstallPackageCommand = "pip3 install --extra-index-url " + repositoryUrl
-    pipDownloadPackageCommand="pip3 install --extra-index-url " + repositoryUrl
+    pipDownloadPackageCommand="pip3 download --extra-index-url " + repositoryUrl
     packageUploadCommand = "python3 -m twine upload --repository-url " + repositoryUrl + " --username " + username + " --password " + password+ " dist/*"
     packageBuildCommand = "python3 setup.py sdist bdist_wheel"
 }
@@ -105,7 +105,9 @@ runCommand(executionBasePath, "pip3 uninstall --yes " + uploadedDepdendentPackag
 
 
 // execute pip download commands
-runCommand(executionBasePath, pipDownloadPackageCommand + " pip-upload-test")
-runCommand(executionBasePath, pipDownloadPackageCommand + " pip-package-with-dependency")
+commandOutput = runCommand(executionBasePath, pipDownloadPackageCommand + " pip-upload-test")
+assert  commandOutput.contains("Successfully downloaded pip-upload-test")
+commandOutput = runCommand(executionBasePath, pipDownloadPackageCommand + " pip-package-with-dependency")
+assert  commandOutput.contains("Successfully downloaded ")
 
 println "Pypi Integration Test completed.!!"

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  strongbox-web-integration-tests-pypi:
+    image: strongboxci/alpine:jdk8-mvn3.6-pip19.3
+    volumes:
+      - $HOME/.m2/repository:/home/jenkins/.m2/repository
+      - ../:/workspace
+    working_dir: /workspace/pypi
+    command: mvn clean install -U

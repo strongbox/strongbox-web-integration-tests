@@ -5,7 +5,7 @@ import java.nio.file.Paths
 
 
 def baseScript = new GroovyScriptEngine("$project.basedir/src/it").with
-{ loadScriptByName('PypiIntegrationTest.groovy') }
+{ loadScriptByName('PypiWebIntegrationTest.groovy') }
 
 this.metaClass.mixin baseScript
 

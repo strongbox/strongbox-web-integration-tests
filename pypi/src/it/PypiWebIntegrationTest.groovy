@@ -1,7 +1,7 @@
 import java.nio.file.Paths
 import org.apache.commons.io.FileUtils
 
-class PypiIntegrationTest
+class PypiWebIntegrationTest
 {
 
     def getExecutionBasePath(project)

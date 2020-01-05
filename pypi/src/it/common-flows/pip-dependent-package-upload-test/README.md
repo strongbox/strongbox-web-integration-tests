@@ -1,0 +1,1 @@
+This is an integration test for `pip` which covers upload/install/download artifacts to/from the Strongbox artifact repository manager.

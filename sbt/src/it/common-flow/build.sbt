@@ -1,3 +1,12 @@
+// As of 1.3, SBT uses Coursier instead of Ivy to resolve libraries.
+// https://www.scala-sbt.org/1.x/docs/sbt-1.3-Release-Notes.html#Library+management+with+Coursier
+// This will break the integration test because Coursier is storing the artifacts in a different path.
+// https://get-coursier.io/docs/cache
+//
+// TODO: Update the project and the test at some point.
+//
+ThisBuild / useCoursier := false
+
 organization := "org.carlspring.strongbox.examples"
 
 name := "hello-strongbox-sbt"

@@ -27,9 +27,10 @@ assert !getLogbackCoreDirectory().exists()
 
 def executionPath = getExecutionPath(project).resolve('common-flow')
 
-validateOutput runCommand(executionPath, "sbt compile")
-validateOutput runCommand(executionPath, "sbt assembly")
-validateOutput runCommand(executionPath, "sbt publish")
+// Keep -no-colors so it outputs the downloaded artifacts in the log.
+validateOutput runCommand(executionPath, "sbt -no-colors compile")
+validateOutput runCommand(executionPath, "sbt -no-colors assembly")
+validateOutput runCommand(executionPath, "sbt -no-colors publish")
 
 assert getLogbackCoreDirectory().exists()
 assert getLogbackJarFile().exists()

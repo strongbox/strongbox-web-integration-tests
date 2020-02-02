@@ -20,7 +20,11 @@ credentials += Credentials("Strongbox Repository Manager",
                            "admin",
                            "password")
 
-resolvers += "Strongbox" at "http://localhost:48080/storages/storage0/group-releases/"
+// Do NOT use "resolvers += .." because it APPENDS a repository to the collection which results into false-positive success.
+// Artifacts will be resolved from a fallback repository OTHER than the Strongbox which is being tested.
+fullResolvers := Seq(
+  "Strongbox" at "http://localhost:48080/storages/storage-sbt-proxies/group-sbt-proxies"
+)
 
 publishTo := {
   val distributionRepository = "http://localhost:48080/storages/storage0/"
@@ -31,7 +35,7 @@ publishTo := {
 }
 
 libraryDependencies ++= Seq(
-  "junit" % "junit" % "4.11",
+  "org.carlspring.commons" % "commons-http" % "1.3",
   "ch.qos.logback" % "logback-core" % "1.2.3"
 )
 

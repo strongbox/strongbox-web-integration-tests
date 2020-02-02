@@ -6,4 +6,4 @@ services:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
       - ../:/workspace
     working_dir: /workspace/nuget
-    command: mvn clean install -U
+    command: mvn clean install

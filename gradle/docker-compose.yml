@@ -6,4 +6,4 @@ services:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
       - ../:/workspace
     working_dir: /workspace/gradle
-    command: mvn clean install -U -e
+    command: mvn clean install -e

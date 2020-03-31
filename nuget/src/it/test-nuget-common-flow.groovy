@@ -32,8 +32,8 @@ runCommand(targetPath, String.format(
     configPath))
 
 output = runCommand(targetPath, String.format(
-    "$nugetExec list Org.Carlspring -ConfigFile %s",
-    configPath))
+    "$nugetExec list Org.Carlspring -Source %s",
+    storageUrl))
 assert output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
 
 output = runCommand(targetPath, String.format(
@@ -41,6 +41,6 @@ output = runCommand(targetPath, String.format(
     storageUrl,
     configPath))
 output = runCommand(targetPath, String.format(
-    "$nugetExec list Org.Carlspring -ConfigFile %s",
-    configPath))
+    "$nugetExec list Org.Carlspring -Source %s",
+    storageUrl))
 assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")

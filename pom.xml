@@ -46,6 +46,7 @@
         <module>npm</module>
         <module>raw</module>
         <module>pypi</module>
+        <module>choco</module>
     </modules>
 
 </project>

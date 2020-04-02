@@ -55,4 +55,199 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>strongbox-web-core</artifactId>
+        <version>${project.version}</version>
+        <exclusions>
+            <exclusion>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>strongbox-testing-web</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>strongbox-storage-api-resources</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-testing-core</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-web-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>strongbox-testing-core</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+        </dependency>
+    </dependencies>
+    
+        <profiles>
+        <!-- These two profiles need to be on top: -->
+        <profile>
+            <id>reserve-ports</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>reserve-network-port</id>
+                                <goals>
+                                    <goal>reserve-network-port</goal>
+                                </goals>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <portNames>
+                                        <portName>port.jetty.listen</portName>
+                                        <portName>port.jetty.shutdown</portName>
+                                    </portNames>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>set-default-ports</id>
+            <activation>
+                <property>
+                    <name>!strongbox.port</name>
+                </property>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Default ports for local development: -->
+                <port.jetty.listen>48080</port.jetty.listen>
+                <port.jetty.shutdown>19081</port.jetty.shutdown>
+            </properties>
+        </profile>
+
+        <!-- These two profiles need to be on top. -->
+        <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-host-default</id>
+            <activation>
+                <property>
+                    <name>!strongbox.host</name>
+                </property>
+            </activation>
+            <properties>
+                <strongbox.host>localhost</strongbox.host>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>set-strongbox-host</id>
+            <activation>
+                <property>
+                    <name>strongbox.host</name>
+                </property>
+            </activation>
+
+            <properties>
+                <strongbox.host>${strongbox.host}</strongbox.host>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-port-default</id>
+            <activation>
+                <property>
+                    <name>!strongbox.port</name>
+                </property>
+            </activation>
+
+            <properties>
+                <strongbox.port>${port.jetty.listen}</strongbox.port>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- Required for the sake of the integration tests: -->
+            <id>set-strongbox-port</id>
+            <activation>
+                <property>
+                    <name>strongbox.port</name>
+                </property>
+            </activation>
+            <properties>
+                <port.jetty.listen>${strongbox.port}</port.jetty.listen>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- To skip this profile, just execute the build like this: 
+                Under Linux (note the the exclamation mark needs to be escaped): 
+                    mvn clean install -P\!run-choco-it-tests 
+                Under Windows:
+                    mvn clean install -P!run-choco-it-tests 
+             -->
+            <id>run-choco-it-tests</id>
+            <activation>
+                <property>
+                    <name>!skipTests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- This plugin needs to be defined first, as the execution 
+                        of the Jetty Maven plugin which shuts down Jetty overlaps with this and shuts 
+                        it down before the tests are done. -->
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>choco-integration-tests</id>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <phase>integration-test</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <scripts>
+                                <script>file:///${basedir}/src/it/common-flows/test-choco-auth-config-flows.groovy</script>
+                            </scripts>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.carlspring.strongbox</groupId>
+                                <artifactId>strongbox-rest-client</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>${version.groovy}</version>
+                                <scope>runtime</scope>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

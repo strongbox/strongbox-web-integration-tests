@@ -37,10 +37,20 @@ output = runCommand(targetPath, String.format(
 assert output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
 
 output = runCommand(targetPath, String.format(
+    "$nugetExec list Org.Carlspring -Source %s",
+    storageUrl))
+assert output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
+
+output = runCommand(targetPath, String.format(
     "$nugetExec delete Org.Carlspring.Strongbox.Examples.Nuget.Mono 1.0.0 -Source %s -NonInteractive -ConfigFile %s",
     storageUrl,
     configPath))
 output = runCommand(targetPath, String.format(
     "$nugetExec list Org.Carlspring -ConfigFile %s",
     configPath))
+assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")
+
+output = runCommand(targetPath, String.format(
+    "$nugetExec list Org.Carlspring -Source %s",
+    storageUrl))
 assert !output.contains("Org.Carlspring.Strongbox.Examples.Nuget.Mono")

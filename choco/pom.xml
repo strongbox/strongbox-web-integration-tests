@@ -225,6 +225,7 @@
                         <configuration>
                             <scripts>
                                 <script>file:///${basedir}/src/it/common-flows/test-choco-auth-config-flows.groovy</script>
+                                <script>file:///${basedir}/src/it/common-flows/test-choco-common-flows.groovy</script>
                             </scripts>
                         </configuration>
                         <dependencies>

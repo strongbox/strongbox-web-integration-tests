@@ -8,7 +8,7 @@ def baseScript = new GroovyScriptEngine("$project.basedir/src/it").with
 this.metaClass.mixin baseScript
 
 println "\n"
-println "Choco Integration Test started....\n"
+println "Choco Integration Tests started....\n"
 println "Executing test-choco-auth-config-flows.groovy\n"
 
 

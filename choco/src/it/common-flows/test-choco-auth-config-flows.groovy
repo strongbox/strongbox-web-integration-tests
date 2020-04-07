@@ -22,13 +22,13 @@ println "Base path is " + executionBasePath + "\n"
 def saveApiKeyCommand = "choco apikey -k " + API_KEY + " -s " + REPO_URL
 commandOutput = runCommand(executionBasePath, saveApiKeyCommand)
 def expectedOutput = "Added ApiKey for " + REPO_URL
-assert commandOutput.contains(expectedOutput) || commandOutput.contains("Updated ApiKey for " + REPO_URL) 
+assert commandOutput.contains(expectedOutput)
 
 // Add Strongbox repository as source to choco
 def addSourceCommand = "choco source add -n=strongbox -s " + REPO_URL + " --priority=1"
 commandOutput = runCommand(executionBasePath, addSourceCommand)
 expectedOutput = "Added strongbox - " + REPO_URL + " (Priority 1)"
-assert commandOutput.contains(expectedOutput) || commandOutput.contains("Updated strongbox - " + REPO_URL + " (Priority 1)")
+assert commandOutput.contains(expectedOutput)
 
 def getApiKey()
 {

@@ -20,7 +20,7 @@ def executionBasePath = getExecutionBasePath(project)
 println "Base path is " + executionBasePath + "\n"
 
 // Create package to be pushed
-def createPackageCommand = "choco new --name=" + PACKAGE_NAME + " --version=1.0.0 --force"
+def createPackageCommand = "choco new --name=" + PACKAGE_NAME + " --version=1.0.0"
 commandOutput = runCommand(executionBasePath, createPackageCommand)
 def expectedOutput = "Successfully generated " + PACKAGE_NAME + " package specification files"
 assert commandOutput.contains(expectedOutput)
@@ -87,7 +87,22 @@ assert commandOutput.contains(expectedOutput)
 
 
 // Search Package
-def searchackageCommand = "choco search -s " + REPO_URL
-commandOutput = runCommand(executionBasePath, searchackageCommand)
+def searchPackageCommand = "choco search -s " + REPO_URL
+commandOutput = runCommand(executionBasePath, searchPackageCommand)
 assert commandOutput.contains(PACKAGE_NAME + " 1.0.0")
 assert commandOutput.contains("1 packages found.")
+
+
+
+// Install Package
+def installPackageCommand = "choco install " + PACKAGE_NAME + " -s " + REPO_URL
+commandOutput = runCommand(executionBasePath, installPackageCommand)
+expectedOutput = "The install of " + PACKAGE_NAME + " was successful."
+assert commandOutput.contains(expectedOutput)
+
+
+// Uninstall Package
+def uninstallPackageCommand = "choco uninstall " + PACKAGE_NAME
+commandOutput = runCommand(executionBasePath, uninstallPackageCommand)
+expectedOutput = PACKAGE_NAME + " has been successfully uninstalled."
+assert commandOutput.contains(expectedOutput)

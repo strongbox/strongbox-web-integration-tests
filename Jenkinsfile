@@ -109,6 +109,10 @@ pipeline {
                                 'JENKINS_NODE_COOKIE'          : 'dontKillMe'
                         ]
                         modules = [
+                                choco: {
+                                    agent = 'alpine-jdk8-mvn3.6-mono5-nuget3.4-choco0.10'
+                                    tools = 'mvn mono choco'
+                                },
                                 gradle: {
                                     agent = 'alpine-jdk8-mvn3.6-gradle5.6'
                                     tools = 'mvn gradle'

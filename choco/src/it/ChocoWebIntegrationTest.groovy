@@ -6,7 +6,7 @@ class ChocoWebIntegrationTest
 
     def getExecutionBasePath(project)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve('src').resolve('it').resolve('common-flows')
+        return Paths.get(project.build.directory)
     }
 
     def runCommand(targetPath, strList)

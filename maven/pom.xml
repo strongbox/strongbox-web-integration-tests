@@ -67,6 +67,18 @@
                     <groupId>${project.groupId}</groupId>
                     <artifactId>strongbox-testing-web</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-xml</artifactId>
+                </exclusion>
+                 <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-json</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -307,8 +319,8 @@
 
                             <dependency>
                                 <groupId>org.codehaus.groovy</groupId>
-                                <artifactId>groovy-all</artifactId>
-                                <version>${version.groovy}</version>
+                                <artifactId>groovy</artifactId>
+                                <version>3.0.2</version>
                             </dependency>
                         </dependencies>
                     </plugin>

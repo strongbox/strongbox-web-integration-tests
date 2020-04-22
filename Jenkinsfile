@@ -75,7 +75,12 @@ pipeline {
                     script {
                         container("maven") {
                             dir(BUILD_STAGE_M2_REPO + "/org/carlspring/strongbox") {
-                                stash name: 'strongboxArtifacts', includes: '**/*'
+                                // strongbox-distribution is not needed for tool integration tests since they depend
+                                // only on sb-web-core
+                                stash name: 'strongboxArtifacts', includes: '**/*', excludes: '**/strongbox-distribution/**'
+
+                                // Include only strongbox-distribution of type `.zip/tar.gz/etc` (depending on the exclusion list)
+                                // stash name: 'strongboxArtifacts', includes: '**/*', excludes: '**/strongbox-distribution*.zip, **/strongbox-distribution*.deb, **/strongbox-distribution*.rpm'
                             }
                         }
                     }

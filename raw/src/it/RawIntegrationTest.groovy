@@ -2,8 +2,8 @@ import org.carlspring.strongbox.client.RestClient
 import org.carlspring.strongbox.forms.configuration.RemoteRepositoryForm
 import org.carlspring.strongbox.forms.configuration.RepositoryForm
 import org.carlspring.strongbox.forms.configuration.StorageForm
-import org.carlspring.strongbox.providers.datastore.StorageProviderEnum
 import org.carlspring.strongbox.providers.layout.RawLayoutProvider
+import org.carlspring.strongbox.providers.storage.FileSystemStorageProvider
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
 import org.carlspring.strongbox.storage.repository.RepositoryStatusEnum
 import org.carlspring.strongbox.storage.repository.RepositoryTypeEnum
@@ -24,7 +24,7 @@ class RawIntegrationTest
         repositoryForm.setLayout(RawLayoutProvider.ALIAS)
         repositoryForm.setType(RepositoryTypeEnum.PROXY.getType())
         repositoryForm.setAllowsRedeployment(true)
-        repositoryForm.setImplementation(StorageProviderEnum.FILESYSTEM.describe())
+        repositoryForm.setStorageProvider(FileSystemStorageProvider.ALIAS)
         repositoryForm.setStatus(RepositoryStatusEnum.IN_SERVICE.getStatus())
         repositoryForm.setPolicy(RepositoryPolicyEnum.MIXED.getPolicy())
 

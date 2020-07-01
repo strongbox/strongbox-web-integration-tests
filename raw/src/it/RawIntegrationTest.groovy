@@ -10,15 +10,18 @@ import org.carlspring.strongbox.storage.repository.RepositoryTypeEnum
 
 class RawIntegrationTest
 {
+
     final String TEST_RESOURCES = "target/test-resources"
 
-    def createStorage(RestClient client, storageId) {
+    def createStorage(RestClient client, storageId)
+    {
         def storageForm = new StorageForm()
         storageForm.setId(storageId)
         client.addStorage(storageForm)
     }
 
-    def createRemoteRepo(RestClient client, repositoryId, storageId, remoteRepositoryUrl) {
+    def createRemoteRepo(RestClient client, repositoryId, storageId, remoteRepositoryUrl)
+    {
         def repositoryForm = new RepositoryForm()
         repositoryForm.setId(repositoryId)
         repositoryForm.setLayout(RawLayoutProvider.ALIAS)
@@ -34,10 +37,11 @@ class RawIntegrationTest
 
         repositoryForm.setRemoteRepository(remoteRepositoryForm)
 
-        client.addRepository(repositoryForm, storageId)
+        client.addRepository(storageId, repositoryForm)
     }
 
-    def downloadArtifact(address) {
+    def downloadArtifact(address)
+    {
         def artifact = new File(TEST_RESOURCES, "${address.tokenize('/')[-1]}")
         if (!artifact.getParentFile().exists())
         {
@@ -48,7 +52,10 @@ class RawIntegrationTest
         artifact.withOutputStream { out ->
             out << new URL(address).openStream()
         }
+
         println("Finished the download of $address")
+
         return artifact
     }
+
 }

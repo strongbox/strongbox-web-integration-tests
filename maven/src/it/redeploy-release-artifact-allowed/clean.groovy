@@ -51,7 +51,7 @@ try
         repository.setType(RepositoryTypeEnum.HOSTED.type)
         repository.setStatus(RepositoryStatusEnum.IN_SERVICE.status)
 
-        client.addRepository(repository, storage.getId())
+        client.addRepository(storage.getId(), repository)
 
         System.out.println()
         System.out.println()

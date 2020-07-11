@@ -1,7 +1,7 @@
 import org.carlspring.strongbox.client.RestClient
 import org.carlspring.strongbox.forms.configuration.RepositoryForm
-import org.carlspring.strongbox.providers.datastore.StorageProviderEnum
 import org.carlspring.strongbox.providers.layout.Maven2LayoutProvider
+import org.carlspring.strongbox.providers.storage.FileSystemStorageProvider
 import org.carlspring.strongbox.storage.repository.RepositoryPolicyEnum
 import org.carlspring.strongbox.storage.repository.RepositoryStatusEnum
 import org.carlspring.strongbox.storage.repository.RepositoryTypeEnum
@@ -47,11 +47,11 @@ try
         repository.setLayout(Maven2LayoutProvider.ALIAS)
         repository.setPolicy(RepositoryPolicyEnum.RELEASE.policy)
         repository.setAllowsRedeployment(false)
-        repository.setImplementation(StorageProviderEnum.FILESYSTEM.description)
+        repository.setStorageProvider(FileSystemStorageProvider.ALIAS);
         repository.setType(RepositoryTypeEnum.HOSTED.type)
         repository.setStatus(RepositoryStatusEnum.IN_SERVICE.status)
 
-        client.addRepository(repository, storage.getId())
+        client.addRepository(storage.getId(), repository)
 
         System.out.println()
         System.out.println()

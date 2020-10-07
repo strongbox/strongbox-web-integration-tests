@@ -1,7 +1,7 @@
 version: '3'
 services:
   strongbox-web-integration-tests-nuget:
-    image: strongboxci/alpine:jdk8-mvn3.6-mono5-nuget3.4
+    image: strongboxci/alpine:jdk8-mvn3.6-mono5-nuget5.7
     volumes:
       - $HOME/.m2/repository:/home/jenkins/.m2/repository
       - ../:/workspace

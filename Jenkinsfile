@@ -119,7 +119,7 @@ pipeline {
                                 tools = 'mvn mono choco'
                             },
                             gradle: {
-                                agent = 'alpine-jdk8-mvn3.6-gradle5.6'
+                                agent = 'alpine-jdk8-mvn3.6-gradle6.6'
                                 tools = 'mvn gradle'
                             },
                             maven: {},

@@ -11,8 +11,8 @@ def targetPath = getTargetPath(project)
 def baseDir = targetPath.toString()
 def configPath = "$baseDir/NuGet.config"
 
-def nugetExec = System.getenv("NUGET_V3_EXEC")
-assert nugetExec?.trim() : "\"NUGET_V3_EXEC\" environment variable need to be set"
+def nugetExec = System.getenv("NUGET_EXEC")
+assert nugetExec?.trim() : "\"NUGET_EXEC\" environment variable need to be set"
 
 def packageId = "Org.Carlspring.Strongbox.Examples.Nuget.Mono" 
 def packageVersion = "1.0.0"

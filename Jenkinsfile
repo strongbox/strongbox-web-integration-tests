@@ -117,31 +117,40 @@ pipeline {
                             choco: {
                                 agent = 'alpine-jdk8-mvn3.6-mono5-nuget3.4-choco0.10'
                                 tools = 'mvn mono choco'
+                                mavenArgs = '-U'
                             },
                             gradle: {
                                 agent = 'alpine-jdk8-mvn3.6-gradle6.6'
                                 tools = 'mvn gradle'
+                                mavenArgs = '-U'
                             },
-                            maven: {},
+                            maven: {
+                                mavenArgs = '-U'
+                            },
                             npm: {
                                 agent = 'alpine-jdk8-mvn3.6-node12'
                                 tools = 'mvn npm node yarn'
+                                mavenArgs = '-U'
                             },
                             nuget: {
                                 agent = 'alpine-jdk8-mvn3.6-mono5-nuget3.4'
                                 tools = 'mvn mono'
+                                mavenArgs = '-U'
                             },
                             sbt: {
                                 agent = 'alpine-jdk8-mvn3.6-sbt1.3'
                                 tools = 'mvn'
+                                mavenArgs = '-U'
                             },
                             pypi: {
                                 agent = 'alpine-jdk8-mvn3.6-pip19.3'
                                 tools = 'mvn python pip'
+                                mavenArgs = '-U'
                             },
                             raw: {
                                 container = 'maven'
                                 tools = 'mvn'
+                                mavenArgs = '-U'
                             }
                         ]
                     }

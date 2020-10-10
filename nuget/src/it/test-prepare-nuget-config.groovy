@@ -7,8 +7,8 @@ println "Test test-prepare-nuget-config.groovy" + "\n\n"
 
 def targetPath = getTargetPath(project)
 
-def nugetExec = System.getenv("NUGET_V3_EXEC")
-assert nugetExec?.trim() : "\"NUGET_V3_EXEC\" environment variable need to be set"
+def nugetExec = System.getenv("NUGET_EXEC")
+assert nugetExec?.trim() : "\"NUGET_EXEC\" environment variable need to be set"
 
 def nugetApiKey = getApiKey()
 

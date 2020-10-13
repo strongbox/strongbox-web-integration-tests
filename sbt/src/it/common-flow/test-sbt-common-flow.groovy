@@ -1,5 +1,6 @@
 import org.apache.commons.io.FileUtils
 
+import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -18,8 +19,9 @@ def static sbtCache()  {
     return userHome().resolve(".cache")
                      .resolve("coursier")
                      .resolve("v1")
-                     .resolve("http")
-                     .resolve("localhost")
+                     .resolve("https")
+                     .resolve("repo1.maven.org")
+                     .resolve("maven2")
 }
 
 def static getLogbackCoreDirectory() {
@@ -64,6 +66,8 @@ def executionPath = getExecutionPath(project).resolve('common-flow')
 validateOutput runCommand(executionPath, "sbt -no-colors compile")
 validateOutput runCommand(executionPath, "sbt -no-colors package")
 validateOutput runCommand(executionPath, "sbt -no-colors publish")
+
+assert Files.exists(sbtCache())
 
 assert getLogbackCoreDirectory().exists()
 assert getLogbackJarFile().exists()

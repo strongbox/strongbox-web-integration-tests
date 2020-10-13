@@ -15,27 +15,34 @@ def static userHome() {
 }
 
 def static sbtCache()  {
-    return userHome()
-            .resolve(".cache")
-            .resolve("coursier")
-            .resolve("v1")
-            .resolve("http")
-            .resolve("localhost")
+    return userHome().resolve(".cache")
+                     .resolve("coursier")
+                     .resolve("v1")
+                     .resolve("http")
+                     .resolve("localhost")
 }
 
 def static getLogbackCoreDirectory() {
-    return sbtCache().resolve("ch").resolve("qos").resolve("logback")
-            .resolve("logback-core").toFile()
+    return sbtCache().resolve("ch")
+                     .resolve("qos")
+                     .resolve("logback")
+                     .resolve("logback-core")
+                     .toFile()
 }
 
 def static getLogbackJarFile() {
-    return getLogbackCoreDirectory().toPath().resolve("1.2.3")
-            .resolve("logback-core-1.2.3.jar").toFile()
+    return getLogbackCoreDirectory().toPath()
+                                    .resolve("1.2.3")
+                                    .resolve("logback-core-1.2.3.jar")
+                                    .toFile()
 }
 
 def static getCommonsHttpDirectory() {
-    return sbtCache().resolve("org").resolve("carlspring").resolve("commons")
-            .resolve("commons-http").toFile()
+    return sbtCache().resolve("org")
+                     .resolve("carlspring")
+                     .resolve("commons")
+                     .resolve("commons-http")
+                     .toFile()
 }
 
 def static getCommonsHttpJarFile() {

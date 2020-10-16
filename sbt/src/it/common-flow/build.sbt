@@ -5,7 +5,7 @@
 //
 // TODO: Update the project and the test at some point.
 //
-ThisBuild / useCoursier := false
+ThisBuild / useCoursier := true
 
 organization := "org.carlspring.strongbox.examples"
 

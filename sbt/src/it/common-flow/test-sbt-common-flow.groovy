@@ -1,5 +1,7 @@
 import org.apache.commons.io.FileUtils
 
+import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 def baseScript = new GroovyScriptEngine("$project.basedir/src/it").with {
@@ -10,28 +12,43 @@ this.metaClass.mixin baseScript
 println "Test test-sbt-common-flow.groovy" + "\n\n"
 
 def static userHome() {
-    return new File(System.getProperty("user.home")) as File
+    return Paths.get(System.getProperty("user.home")) as Path
 }
 
-def static ivyCache()  {
-    return Paths.get(userHome().toURI()).resolve(".ivy2").resolve("cache")
+def static sbtCache()  {
+    return userHome().resolve(".cache")
+                     .resolve("coursier")
+                     .resolve("v1")
+                     .resolve("https")
+                     .resolve("repo1.maven.org")
+                     .resolve("maven2")
 }
 
 def static getLogbackCoreDirectory() {
-    return ivyCache().resolve("ch.qos.logback").resolve("logback-core").toFile()
+    return sbtCache().resolve("ch")
+                     .resolve("qos")
+                     .resolve("logback")
+                     .resolve("logback-core")
+                     .toFile()
 }
 
 def static getLogbackJarFile() {
-    return getLogbackCoreDirectory().toPath().resolve("jars")
-            .resolve("logback-core-1.2.3.jar").toFile()
+    return getLogbackCoreDirectory().toPath()
+                                    .resolve("1.2.3")
+                                    .resolve("logback-core-1.2.3.jar")
+                                    .toFile()
 }
 
 def static getCommonsHttpDirectory() {
-    return ivyCache().resolve("org.carlspring.commons").resolve("commons-http").toFile()
+    return sbtCache().resolve("org")
+                     .resolve("carlspring")
+                     .resolve("commons")
+                     .resolve("commons-http")
+                     .toFile()
 }
 
 def static getCommonsHttpJarFile() {
-    return getCommonsHttpDirectory().toPath().resolve("jars").resolve("commons-http-1.3.jar").toFile()
+    return getCommonsHttpDirectory().toPath().resolve("1.3").resolve("commons-http-1.3.jar").toFile()
 }
 
 if (getLogbackCoreDirectory().exists())
@@ -49,6 +66,8 @@ def executionPath = getExecutionPath(project).resolve('common-flow')
 validateOutput runCommand(executionPath, "sbt -no-colors compile")
 validateOutput runCommand(executionPath, "sbt -no-colors package")
 validateOutput runCommand(executionPath, "sbt -no-colors publish")
+
+assert Files.exists(sbtCache())
 
 assert getLogbackCoreDirectory().exists()
 assert getLogbackJarFile().exists()

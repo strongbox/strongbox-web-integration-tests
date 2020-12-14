@@ -9,8 +9,6 @@ def BUILD_STAGE_M2_REPO = workspace().getM2LocalRepoPath("strongbox-build")
 def MAVEN_OPTS = "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 def CHECKOUT_DIR = "strongbox-build"
 
-currentBuild.description = 'STRONGBOX_BRANCH: ' + STRONGBOX_BRANCH + '<br> CI_IMAGE_VERSION: ' +CI_IMAGE_VERSION
-
 // Properties are set here, because declarative pipelines don't allow for custom classes in the parameters {} block.
 properties([
     parameters([
@@ -66,6 +64,8 @@ properties([
 def STRONGBOX_BRANCH = params.getOrDefault('STRONGBOX_BRANCH', 'master')
 def STRONGBOX_DEBUG = params.getOrDefault('STRONGBOX_DEBUG', false)
 def CI_IMAGE_VERSION = params.getOrDefault('CI_IMAGE_VERSION', 'master')
+
+currentBuild.description = 'STRONGBOX_BRANCH: ' + STRONGBOX_BRANCH + '<br> CI_IMAGE_VERSION: ' +CI_IMAGE_VERSION
 
 pipeline {
     agent none
